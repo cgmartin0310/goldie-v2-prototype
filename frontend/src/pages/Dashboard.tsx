@@ -49,16 +49,17 @@ const KPI_CARDS = [
 
 // 9 actual signed NC counties — geographic positions (% within NC outline)
 // Western/Foothills cluster + Carteret on coast
+// Positions mapped to NC outline: west (x~5-15), foothills (x~15-30), piedmont (x~30-45), coast (x~80+)
 const COUNTY_ZONES = [
-  { name: 'Catawba',   x: 25, y: 45, intensity: 0.88, count: 312,  isMyCounty: true  },
-  { name: 'Burke',     x: 17, y: 48, intensity: 0.72, count: 241,  isMyCounty: false },
-  { name: 'Caldwell',  x: 15, y: 38, intensity: 0.65, count: 198,  isMyCounty: false },
-  { name: 'Alexander', x: 23, y: 37, intensity: 0.58, count: 174,  isMyCounty: false },
-  { name: 'Rowan',     x: 33, y: 46, intensity: 0.54, count: 161,  isMyCounty: false },
-  { name: 'Cleveland', x: 22, y: 61, intensity: 0.48, count: 143,  isMyCounty: false },
-  { name: 'Surry',     x: 25, y: 25, intensity: 0.42, count: 127,  isMyCounty: false },
-  { name: 'Jackson',   x: 9,  y: 62, intensity: 0.35, count: 104,  isMyCounty: false },
-  { name: 'Carteret',  x: 78, y: 68, intensity: 0.28, count:  87,  isMyCounty: false },
+  { name: 'Catawba',   x: 22, y: 42, intensity: 0.88, count: 312,  isMyCounty: true  },
+  { name: 'Burke',     x: 15, y: 40, intensity: 0.72, count: 241,  isMyCounty: false },
+  { name: 'Caldwell',  x: 18, y: 33, intensity: 0.65, count: 198,  isMyCounty: false },
+  { name: 'Alexander', x: 24, y: 34, intensity: 0.58, count: 174,  isMyCounty: false },
+  { name: 'Rowan',     x: 32, y: 44, intensity: 0.54, count: 161,  isMyCounty: false },
+  { name: 'Cleveland', x: 24, y: 54, intensity: 0.48, count: 143,  isMyCounty: false },
+  { name: 'Surry',     x: 26, y: 24, intensity: 0.42, count: 127,  isMyCounty: false },
+  { name: 'Jackson',   x: 7,  y: 52, intensity: 0.35, count: 104,  isMyCounty: false },
+  { name: 'Carteret',  x: 82, y: 52, intensity: 0.28, count:  87,  isMyCounty: false },
 ];
 
 function CounterNumber({ target, suffix = '' }: { target: number | string; suffix?: string }) {
@@ -145,26 +146,6 @@ export default function Dashboard() {
         })}
       </div>
 
-      {/* Goldie Network strip */}
-      <div className="mb-4 rounded-xl px-4 py-3 flex items-center gap-6 text-xs"
-        style={{ background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)', border: '1px solid rgba(212,168,67,0.2)' }}>
-        <div className="text-[#D4A843] font-semibold text-[11px] uppercase tracking-wider flex-shrink-0">Goldie Network</div>
-        {[
-          { label: 'Counties Active', value: '9 NC' },
-          { label: 'Network Patients', value: '2,847' },
-          { label: 'Pent-Up Revenue', value: '$192M' },
-          { label: 'Provider Network', value: '100+' },
-        ].map(stat => (
-          <div key={stat.label} className="flex items-center gap-2">
-            <span className="font-bold text-white text-sm">{stat.value}</span>
-            <span className="text-white/40">{stat.label}</span>
-            <span className="text-white/20">·</span>
-          </div>
-        ))}
-        <div className="flex-1" />
-        <span className="text-white/30 text-[10px]">Series A · 2026</span>
-      </div>
-
       <div className="grid grid-cols-5 gap-4">
         {/* County Map */}
         <Card className="col-span-3">
@@ -192,14 +173,14 @@ export default function Dashboard() {
                 <rect width="100%" height="100%" fill="url(#grid)" />
               </svg>
 
-              {/* NC state outline — separate SVG with viewBox for percentage-based coords */}
+              {/* NC state outline — simplified but recognizable shape */}
               <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                 <path
-                  d="M 5,20 L 15,15 L 30,13 L 50,12 L 70,13 L 85,15 L 93,20 L 97,30 L 95,40 L 92,48 L 96,56 L 90,67 L 83,76 L 72,81 L 60,84 L 45,87 L 30,85 L 20,81 L 12,72 L 8,58 L 6,42 L 5,30 Z"
+                  d="M 2,28 L 8,25 L 18,22 L 30,20 L 42,19 L 55,18 L 65,20 L 75,22 L 82,26 L 88,30 L 92,33 L 95,38 L 97,42 L 96,46 L 93,43 L 91,47 L 94,52 L 92,56 L 88,54 L 86,58 L 89,62 L 86,65 L 82,60 L 78,57 L 75,55 L 70,56 L 65,58 L 58,60 L 50,62 L 42,63 L 35,63 L 28,62 L 20,62 L 14,63 L 8,65 L 3,67 L 2,60 L 2,50 L 2,40 Z"
                   fill="white"
                   stroke="#94a3b8"
-                  strokeWidth="0.6"
-                  fillOpacity="0.75"
+                  strokeWidth="0.5"
+                  fillOpacity="0.7"
                 />
               </svg>
 

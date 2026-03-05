@@ -1,7 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Waves, Lock, AlertCircle } from 'lucide-react';
+import { Lock, AlertCircle, Building2, Heart, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+
+const CREDENTIALS: Record<string, { role: string; redirect: string }> = {
+  'demo@goldie.health':    { role: 'county',    redirect: '/dashboard' },
+  'county@goldie.health':  { role: 'county',    redirect: '/dashboard' },
+  'provider@goldie.health':{ role: 'provider',  redirect: '/provider/dashboard' },
+  'payer@goldie.health':   { role: 'payer',     redirect: '/payer/dashboard' },
+};
+
+const PORTAL_LABELS: Record<string, { name: string; sub: string; letter: string }> = {
+  county:   { name: 'Catawba County Health Department', sub: 'County Public Health Portal', letter: 'C' },
+  provider: { name: 'Alliance Health — Provider Network', sub: 'Treatment Provider Portal', letter: 'P' },
+  payer:    { name: 'Blue Cross NC — Payer Analytics', sub: 'Insurance & Payer Portal', letter: 'B' },
+};
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -10,6 +23,11 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Derive which portal is being targeted based on typed email
+  const matchedCred = CREDENTIALS[email.toLowerCase()];
+  const detectedRole = matchedCred?.role;
+  const portalLabel = detectedRole ? PORTAL_LABELS[detectedRole] : null;
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -17,11 +35,13 @@ export default function Login() {
 
     await new Promise(r => setTimeout(r, 800));
 
-    if (email === 'demo@goldie.health' && password === 'goldie2026') {
-      localStorage.setItem('goldie_auth', 'demo');
-      navigate('/dashboard');
+    const cred = CREDENTIALS[email.toLowerCase()];
+    if (cred && password === 'goldie2026') {
+      localStorage.setItem('goldie_auth', email.toLowerCase());
+      localStorage.setItem('goldie_role', cred.role);
+      navigate(cred.redirect);
     } else {
-      setError('Invalid credentials');
+      setError('Invalid credentials. Contact your Goldie administrator.');
       setLoading(false);
     }
   };
@@ -31,37 +51,67 @@ export default function Login() {
       {/* Left panel — branding */}
       <div className="hidden lg:flex flex-col justify-between w-1/2 p-12"
         style={{ background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)' }}>
-        
+
         <div className="flex items-center">
           <img src="/goldie-logo-full.png" alt="Goldie Health" className="h-12 w-auto" />
         </div>
 
         <div>
-          <div className="space-y-6 mb-12">
+          <div className="space-y-4 mb-12">
+            <p className="text-[#D4A843] text-sm font-semibold uppercase tracking-widest">
+              Transforming Crisis into Care
+            </p>
             <h1 className="text-4xl font-bold text-white leading-tight">
               Connecting every<br />
               touchpoint in the<br />
-              <span style={{ color: '#D4A843' }}>recovery journey.</span>
+              <span style={{ color: '#D4A843' }}>care journey.</span>
             </h1>
             <p className="text-white/50 text-lg leading-relaxed">
-              Care intelligence platform for substance use disorder — 
-              detecting patients, assessing risk, and closing the loop 
-              on every intervention.
+              Real-time detection, risk stratification, and care coordination
+              across the conditions that drive the highest costs.
             </p>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-4">
+          {/* Three stakeholder cards */}
+          <div className="space-y-3">
             {[
-              { value: '9', label: 'NC counties signed · $192M opportunity' },
-              { value: '6.4%', label: 'initiate treatment in 30 days (vs 21% with Goldie)' },
-              { value: '73%', label: 'repeat OD risk without intervention' },
-            ].map(stat => (
-              <div key={stat.label} className="rounded-xl p-4" style={{ background: 'rgba(255,255,255,0.05)' }}>
-                <div className="text-2xl font-bold mb-1" style={{ color: '#D4A843' }}>{stat.value}</div>
-                <div className="text-xs text-white/40 leading-tight">{stat.label}</div>
-              </div>
-            ))}
+              {
+                icon: Building2,
+                title: 'Public Health',
+                desc: 'Detect high-risk patients before the next crisis',
+                color: '#3b82f6',
+              },
+              {
+                icon: Heart,
+                title: 'Treatment Providers',
+                desc: 'Receive qualified referrals at the moment of highest motivation',
+                color: '#D4A843',
+              },
+              {
+                icon: Shield,
+                title: 'Insurance & Payers',
+                desc: 'Measurable cost reduction through coordinated intervention',
+                color: '#22c55e',
+              },
+            ].map(item => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={item.title}
+                  className="flex items-center gap-4 rounded-xl px-4 py-3"
+                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}
+                >
+                  <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                    style={{ background: `${item.color}22` }}>
+                    <Icon className="w-4 h-4" style={{ color: item.color }} />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-white">{item.title}</div>
+                    <div className="text-xs text-white/40 mt-0.5">{item.desc}</div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -82,16 +132,26 @@ export default function Login() {
             <div className="mb-6">
               <div className="flex items-center gap-2 mb-1">
                 <Lock className="w-4 h-4 text-[#D4A843]" />
-                <span className="text-xs font-medium text-[#D4A843] uppercase tracking-wider">Secure County Access</span>
+                <span className="text-xs font-medium text-[#D4A843] uppercase tracking-wider">Secure Access</span>
               </div>
               <h2 className="text-2xl font-bold text-white">Sign In</h2>
-              <div className="flex items-center gap-2 mt-2 px-3 py-2 rounded-lg" style={{ background: 'rgba(212,168,67,0.08)', border: '1px solid rgba(212,168,67,0.2)' }}>
-                <div className="w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(212,168,67,0.15)' }}>
-                  <span className="text-[#D4A843] text-xs font-bold">C</span>
+
+              {/* Dynamic portal indicator */}
+              <div className="flex items-center gap-2 mt-2 px-3 py-2 rounded-lg transition-all"
+                style={{ background: 'rgba(212,168,67,0.08)', border: '1px solid rgba(212,168,67,0.2)' }}>
+                <div className="w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0"
+                  style={{ background: 'rgba(212,168,67,0.15)' }}>
+                  <span className="text-[#D4A843] text-xs font-bold">
+                    {portalLabel?.letter ?? 'G'}
+                  </span>
                 </div>
                 <div>
-                  <div className="text-xs font-semibold text-white">Catawba County Health Department</div>
-                  <div className="text-[10px] text-white/40">Goldie NC Network · Investor Demo</div>
+                  <div className="text-xs font-semibold text-white">
+                    {portalLabel?.name ?? 'Goldie Health Platform'}
+                  </div>
+                  <div className="text-[10px] text-white/40">
+                    {portalLabel?.sub ?? 'Goldie NC Network · Investor Demo'}
+                  </div>
                 </div>
               </div>
             </div>
@@ -151,7 +211,7 @@ export default function Login() {
             </form>
 
             <div className="mt-5 p-3 rounded-lg" style={{ background: 'rgba(212,168,67,0.08)', border: '1px solid rgba(212,168,67,0.15)' }}>
-              <p className="text-xs text-white/30">Authorized personnel only</p>
+              <p className="text-xs text-white/30">Authorized personnel only · Goldie NC Network · 9 Counties</p>
             </div>
           </div>
         </div>
