@@ -4,8 +4,8 @@ import { Waves, Lock, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function Login() {
-  const [email, setEmail] = useState('demo@goldie.health');
-  const [password, setPassword] = useState('goldie2026');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ export default function Login() {
       localStorage.setItem('goldie_auth', 'demo');
       navigate('/dashboard');
     } else {
-      setError('Invalid credentials. Try demo@goldie.health / goldie2026');
+      setError('Invalid credentials');
       setLoading(false);
     }
   };
@@ -104,7 +104,7 @@ export default function Login() {
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   className="w-full rounded-lg px-3 py-2.5 text-sm text-white bg-white/5 border border-white/10 focus:border-[#D4A843] focus:outline-none focus:ring-1 focus:ring-[#D4A843] placeholder-white/20 transition-colors"
-                  placeholder="demo@goldie.health"
+                  placeholder="Email address"
                   required
                 />
               </div>
@@ -144,10 +144,8 @@ export default function Login() {
               </Button>
             </form>
 
-            <div className="mt-5 p-3 rounded-lg" style={{ background: 'rgba(212,168,67,0.08)', border: '1px solid rgba(212,168,67,0.2)' }}>
-              <p className="text-xs text-[#D4A843]/70 font-medium mb-1">Demo Credentials</p>
-              <p className="text-xs text-white/40 font-mono">demo@goldie.health</p>
-              <p className="text-xs text-white/40 font-mono">goldie2026</p>
+            <div className="mt-5 p-3 rounded-lg" style={{ background: 'rgba(212,168,67,0.08)', border: '1px solid rgba(212,168,67,0.15)' }}>
+              <p className="text-xs text-white/30">Authorized personnel only</p>
             </div>
           </div>
         </div>
