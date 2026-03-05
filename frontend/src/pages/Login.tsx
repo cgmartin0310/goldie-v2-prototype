@@ -97,6 +97,8 @@ export default function Login() {
                 </label>
                 <input
                   type="email"
+                  name="goldie-email-new"
+                  autoComplete="new-password"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   className="w-full rounded-lg px-3 py-2.5 text-sm text-white bg-white/5 border border-white/10 focus:border-[#D4A843] focus:outline-none focus:ring-1 focus:ring-[#D4A843] placeholder-white/20 transition-colors"
@@ -111,6 +113,8 @@ export default function Login() {
                 </label>
                 <input
                   type="password"
+                  name="goldie-pass-new"
+                  autoComplete="new-password"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   className="w-full rounded-lg px-3 py-2.5 text-sm text-white bg-white/5 border border-white/10 focus:border-[#D4A843] focus:outline-none focus:ring-1 focus:ring-[#D4A843] placeholder-white/20 transition-colors"
