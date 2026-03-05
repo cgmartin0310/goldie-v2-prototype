@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AlertTriangle, Users, Activity, TrendingUp, ArrowUpRight, ArrowRight, MapPin, Clock, Building2 } from 'lucide-react';
+import { AlertTriangle, Users, Activity, TrendingUp, ArrowUpRight, ArrowRight, MapPin, Clock, Building2, DollarSign, FileText } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import patients from '@/data/patients.json';
@@ -405,6 +405,65 @@ export default function Dashboard() {
               </div>
             </div>
           </CardContent>
+        </Card>
+      </div>
+
+      {/* Revenue Recovery Card */}
+      <div className="mt-4">
+        <Card className="overflow-hidden" style={{ border: '1px solid rgba(212,168,67,0.3)' }}>
+          <div className="flex">
+            {/* Gold accent bar */}
+            <div className="w-1.5 flex-shrink-0" style={{ background: 'linear-gradient(180deg, #D4A843 0%, #c49a3a 100%)' }} />
+            <div className="flex-1 p-5">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: 'rgba(212,168,67,0.1)' }}>
+                    <DollarSign className="w-5 h-5 text-[#D4A843]" />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-slate-900">💰 Revenue Recovery — Peer Support Billing</div>
+                    <div className="text-xs text-slate-500">Medicaid-billable encounters auto-documented by Goldie</div>
+                  </div>
+                </div>
+                <div className="text-right ml-4 flex-shrink-0">
+                  <div className="text-xs text-slate-400 mb-0.5">Goldie ROI from billing alone</div>
+                  <div className="text-2xl font-black text-[#D4A843]">4.5x</div>
+                  <div className="text-xs text-slate-500">$100K/yr subscription</div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-4 gap-4">
+                <div className="rounded-lg p-3" style={{ background: 'rgba(212,168,67,0.06)', border: '1px solid rgba(212,168,67,0.15)' }}>
+                  <div className="text-lg font-bold text-slate-900">62%</div>
+                  <div className="text-xs text-slate-500 mt-0.5">Medicaid-eligible patients</div>
+                  <div className="text-[10px] text-slate-400 mt-0.5">~194 of 312 active</div>
+                </div>
+                <div className="rounded-lg p-3" style={{ background: 'rgba(212,168,67,0.06)', border: '1px solid rgba(212,168,67,0.15)' }}>
+                  <div className="text-lg font-bold text-slate-900">~1,200</div>
+                  <div className="text-xs text-slate-500 mt-0.5">Billable encounters/month</div>
+                  <div className="text-[10px] text-slate-400 mt-0.5">H0038 / H0039 codes</div>
+                </div>
+                <div className="rounded-lg p-3" style={{ background: 'rgba(34,197,94,0.06)', border: '1px solid rgba(34,197,94,0.2)' }}>
+                  <div className="text-lg font-bold text-green-700">$37,290/mo</div>
+                  <div className="text-xs text-slate-500 mt-0.5">Recoverable revenue</div>
+                  <div className="text-[10px] font-semibold text-green-600 mt-0.5">$447K / year</div>
+                </div>
+                <div className="rounded-lg p-3" style={{ background: '#fef2f2', border: '1px solid #fecaca' }}>
+                  <div className="text-lg font-bold text-red-600">$0/mo</div>
+                  <div className="text-xs text-slate-500 mt-0.5">Currently billing</div>
+                  <div className="text-[10px] text-red-500 mt-0.5">Revenue being left on table</div>
+                </div>
+              </div>
+
+              <div className="mt-3 flex items-center gap-2">
+                <FileText className="w-3.5 h-3.5 text-slate-400" />
+                <span className="text-xs text-slate-500">
+                  Goldie auto-documents peer support encounters for Medicaid billing — no additional documentation burden on your team.
+                  <span className="text-[#D4A843] font-medium ml-1">Enable billing integration → </span>
+                </span>
+              </div>
+            </div>
+          </div>
         </Card>
       </div>
     </div>

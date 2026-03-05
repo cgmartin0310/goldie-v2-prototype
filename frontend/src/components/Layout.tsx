@@ -24,6 +24,7 @@ export default function Layout({ children }: LayoutProps) {
 
   const handleLogout = () => {
     localStorage.removeItem('goldie_auth');
+    localStorage.removeItem('goldie_role');
     navigate('/');
   };
 

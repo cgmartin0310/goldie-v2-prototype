@@ -1,7 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
+import ProviderLayout from './components/ProviderLayout';
+import PayerLayout from './components/PayerLayout';
 import Login from './pages/Login';
+
+// County pages
 import Dashboard from './pages/Dashboard';
 import DetectionFeed from './pages/DetectionFeed';
 import Patients from './pages/Patients';
@@ -9,24 +13,90 @@ import PatientProfile from './pages/PatientProfile';
 import Cases from './pages/Cases';
 import Analytics from './pages/Analytics';
 
-function PrivateRoute({ children }: { children: React.ReactNode }) {
-  const auth = localStorage.getItem('goldie_auth');
-  if (!auth) return <Navigate to="/" replace />;
+// Provider pages
+import ProviderDashboard from './pages/provider/ProviderDashboard';
+import ProviderReferrals from './pages/provider/ProviderReferrals';
+import ProviderOutcomes from './pages/provider/ProviderOutcomes';
+
+// Payer pages
+import PayerDashboard from './pages/payer/PayerDashboard';
+import PayerPopulation from './pages/payer/PayerPopulation';
+import PayerROI from './pages/payer/PayerROI';
+
+function getRole(): string | null {
+  return localStorage.getItem('goldie_role');
+}
+
+function isAuthed(): boolean {
+  return !!localStorage.getItem('goldie_auth');
+}
+
+// County private route
+function CountyRoute({ children }: { children: React.ReactNode }) {
+  if (!isAuthed()) return <Navigate to="/" replace />;
   return <Layout>{children}</Layout>;
+}
+
+// Provider private route
+function ProviderRoute({ children }: { children: React.ReactNode }) {
+  if (!isAuthed()) return <Navigate to="/" replace />;
+  if (getRole() !== 'provider') return <Navigate to="/dashboard" replace />;
+  return <ProviderLayout>{children}</ProviderLayout>;
+}
+
+// Payer private route
+function PayerRoute({ children }: { children: React.ReactNode }) {
+  if (!isAuthed()) return <Navigate to="/" replace />;
+  if (getRole() !== 'payer') return <Navigate to="/dashboard" replace />;
+  return <PayerLayout>{children}</PayerLayout>;
+}
+
+// Root redirect based on role
+function RootRedirect() {
+  if (!isAuthed()) return <Login />;
+  const role = getRole();
+  if (role === 'provider') return <Navigate to="/provider/dashboard" replace />;
+  if (role === 'payer') return <Navigate to="/payer/dashboard" replace />;
+  return <Navigate to="/dashboard" replace />;
+}
+
+// Catch-all based on role
+function DefaultRedirect() {
+  if (!isAuthed()) return <Navigate to="/" replace />;
+  const role = getRole();
+  if (role === 'provider') return <Navigate to="/provider/dashboard" replace />;
+  if (role === 'payer') return <Navigate to="/payer/dashboard" replace />;
+  return <Navigate to="/dashboard" replace />;
 }
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-        <Route path="/detection" element={<PrivateRoute><DetectionFeed /></PrivateRoute>} />
-        <Route path="/patients" element={<PrivateRoute><Patients /></PrivateRoute>} />
-        <Route path="/patients/:id" element={<PrivateRoute><PatientProfile /></PrivateRoute>} />
-        <Route path="/cases" element={<PrivateRoute><Cases /></PrivateRoute>} />
-        <Route path="/analytics" element={<PrivateRoute><Analytics /></PrivateRoute>} />
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        {/* Login */}
+        <Route path="/" element={<RootRedirect />} />
+
+        {/* County portal */}
+        <Route path="/dashboard" element={<CountyRoute><Dashboard /></CountyRoute>} />
+        <Route path="/detection" element={<CountyRoute><DetectionFeed /></CountyRoute>} />
+        <Route path="/patients" element={<CountyRoute><Patients /></CountyRoute>} />
+        <Route path="/patients/:id" element={<CountyRoute><PatientProfile /></CountyRoute>} />
+        <Route path="/cases" element={<CountyRoute><Cases /></CountyRoute>} />
+        <Route path="/analytics" element={<CountyRoute><Analytics /></CountyRoute>} />
+
+        {/* Provider portal */}
+        <Route path="/provider/dashboard" element={<ProviderRoute><ProviderDashboard /></ProviderRoute>} />
+        <Route path="/provider/referrals" element={<ProviderRoute><ProviderReferrals /></ProviderRoute>} />
+        <Route path="/provider/outcomes" element={<ProviderRoute><ProviderOutcomes /></ProviderRoute>} />
+        <Route path="/provider/settings" element={<ProviderRoute><ProviderDashboard /></ProviderRoute>} />
+
+        {/* Payer portal */}
+        <Route path="/payer/dashboard" element={<PayerRoute><PayerDashboard /></PayerRoute>} />
+        <Route path="/payer/population" element={<PayerRoute><PayerPopulation /></PayerRoute>} />
+        <Route path="/payer/roi" element={<PayerRoute><PayerROI /></PayerRoute>} />
+
+        {/* Catch-all */}
+        <Route path="*" element={<DefaultRedirect />} />
       </Routes>
     </BrowserRouter>
   );
