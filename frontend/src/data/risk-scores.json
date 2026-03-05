@@ -17,7 +17,7 @@
     "rubricFactors": [
       { "factor": "Recent overdose (OD #4 today)", "points": 30, "maxPoints": 30, "severity": "critical" },
       { "factor": "Lifetime OD history (4 total)", "points": 20, "maxPoints": 20, "severity": "high" },
-      { "factor": "Fentanyl + benzodiazepine combination (5x OD risk)", "points": 20, "maxPoints": 20, "severity": "critical" },
+      { "factor": "Fentanyl + benzodiazepine (5x OD risk)", "points": 20, "maxPoints": 20, "severity": "critical" },
       { "factor": "Released from custody 14 days ago", "points": 15, "maxPoints": 15, "severity": "high" },
       { "factor": "No naloxone access in past 30 days", "points": 10, "maxPoints": 10, "severity": "high" },
       { "factor": "Housing instability (emergency shelter)", "points": 5, "maxPoints": 5, "severity": "moderate" },
@@ -25,16 +25,231 @@
       { "factor": "Prior MAT engagement (mitigating)", "points": -10, "maxPoints": 0, "severity": "mitigating" }
     ],
     "aiInsights": [
-      "OD frequency accelerating: 10-month gap between OD1 and OD2, 5.5 months between OD2 and OD3, 4.5 months between OD3 and OD4",
-      "Post-incarceration release pattern: 2 of 4 ODs occurred within 2 weeks of jail release",
-      "Poly-substance pattern with fentanyl + benzos significantly increases naloxone effectiveness challenges",
-      "Hep C progression without treatment increases medical complication risk",
-      "MAT discontinuation pattern: 2 starts, 2 stops — indicating engagement barriers"
+      "OD frequency accelerating: 10-month gap OD1→OD2, 5.5 months OD2→OD3, 4.5 months OD3→OD4",
+      "Post-incarceration release pattern: 2 of 4 ODs occurred within 2 weeks of CCDC release",
+      "Fentanyl + benzos significantly reduces naloxone effectiveness — multiple doses required",
+      "Hep C progression without treatment increases medical complication risk at 12-month horizon",
+      "MAT discontinuation pattern (2 starts, 2 stops) indicates systemic engagement barriers"
     ],
     "redFlags": [
       { "severity": "critical", "flag": "Opioid + Benzodiazepine combination (5x increased OD risk per CDC)", "action": "Immediate naloxone kit + benzo tapering plan", "deadline": "Today" },
       { "severity": "critical", "flag": "4th overdose — accelerating frequency", "action": "ED DART protocol + warm handoff to MAT", "deadline": "Today" },
-      { "severity": "high", "flag": "Post-incarceration release + no MAT bridge", "action": "Buprenorphine induction in ED", "deadline": "Today" }
+      { "severity": "high", "flag": "Post-incarceration release + no MAT bridge from CCDC", "action": "Buprenorphine induction at CVMC ED", "deadline": "Today" }
+    ]
+  },
+  "patient-013": {
+    "rubricScore": 85,
+    "rubricLevel": "critical",
+    "aiScore": 88,
+    "aiLevel": "critical",
+    "confidence": 0.94,
+    "combinedScore": 87,
+    "riskVector": {
+      "overdoseRisk": 90,
+      "relapseRisk": 88,
+      "treatmentDropout": 72,
+      "housingCrisis": 60,
+      "medicalComplication": 85,
+      "crisisRisk": 70
+    },
+    "rubricFactors": [
+      { "factor": "Recent overdose (OD #3 today, while pregnant)", "points": 30, "maxPoints": 30, "severity": "critical" },
+      { "factor": "Lifetime OD history (3 total)", "points": 15, "maxPoints": 20, "severity": "high" },
+      { "factor": "Fentanyl + methamphetamine (high-risk combo)", "points": 20, "maxPoints": 20, "severity": "critical" },
+      { "factor": "No recent incarceration/release", "points": 0, "maxPoints": 15, "severity": "low" },
+      { "factor": "No naloxone access (OD without own kit)", "points": 10, "maxPoints": 10, "severity": "high" },
+      { "factor": "Unstable housing", "points": 5, "maxPoints": 5, "severity": "moderate" },
+      { "factor": "Pregnancy — dual patient status (fetus)", "points": 5, "maxPoints": 0, "severity": "critical" }
+    ],
+    "aiInsights": [
+      "Pregnant patient with active fentanyl + meth use — dual risk profile for mother and fetus",
+      "Neonatal Opioid Withdrawal Syndrome (NOWS) risk: high — requires Subutex (buprenorphine mono) not Suboxone",
+      "MAT discontinuation within 6 weeks of initiation — indicates need for intensive outreach support",
+      "Prenatal depression score (Edinburgh 18) suggests high psychiatric co-morbidity burden",
+      "Housing instability during pregnancy compounds risk of APS involvement post-delivery"
+    ],
+    "redFlags": [
+      { "severity": "critical", "flag": "OD #3 while 14 weeks pregnant — fetal monitoring required", "action": "Immediate OB/ED coordination + Subutex induction", "deadline": "Today" },
+      { "severity": "critical", "flag": "Fentanyl + meth — high risk of NOWS and preterm labor", "action": "High-risk OB referral + MAT today", "deadline": "Today" },
+      { "severity": "high", "flag": "Unstable housing during pregnancy — APS notification may be required", "action": "Housing navigation + social work consult", "deadline": "48 hours" }
+    ]
+  },
+  "patient-014": {
+    "rubricScore": 38,
+    "rubricLevel": "moderate",
+    "aiScore": 41,
+    "aiLevel": "moderate",
+    "confidence": 0.87,
+    "combinedScore": 40,
+    "riskVector": {
+      "overdoseRisk": 28,
+      "relapseRisk": 42,
+      "treatmentDropout": 25,
+      "housingCrisis": 10,
+      "medicalComplication": 45,
+      "crisisRisk": 38
+    },
+    "rubricFactors": [
+      { "factor": "No recent overdose (last: Sept 2025)", "points": 0, "maxPoints": 30, "severity": "low" },
+      { "factor": "Lifetime OD history (1 total — near-OD)", "points": 5, "maxPoints": 20, "severity": "low" },
+      { "factor": "Alcohol + opioids (moderate risk combo)", "points": 10, "maxPoints": 20, "severity": "moderate" },
+      { "factor": "No recent incarceration/release", "points": 0, "maxPoints": 15, "severity": "low" },
+      { "factor": "Naloxone available (given to spouse)", "points": 5, "maxPoints": 10, "severity": "low" },
+      { "factor": "Stable housing", "points": 0, "maxPoints": 5, "severity": "low" },
+      { "factor": "Active MAT (Vivitrol, Month 5) — mitigating", "points": -15, "maxPoints": 0, "severity": "mitigating" },
+      { "factor": "Stable employment returning — mitigating", "points": -7, "maxPoints": 0, "severity": "mitigating" }
+    ],
+    "aiInsights": [
+      "5 months continuous Vivitrol — treatment retention is the strongest predictor of sustained recovery",
+      "PTSD improving (PCL-5: 52→34) — co-occurring mental health treatment is reducing SUD relapse risk",
+      "Chronic pain remains a risk factor — non-opioid pain management plan should be formalized",
+      "Family engagement and return to employment are strong protective factors",
+      "Veteran status — VA coordination ensures continuity of care"
+    ],
+    "redFlags": [
+      { "severity": "moderate", "flag": "Chronic pain without opioid-free pain plan formally documented", "action": "Consult with pain management for non-opioid protocol", "deadline": "2 weeks" },
+      { "severity": "low", "flag": "PTSD still moderate — continued therapy engagement critical", "action": "Maintain monthly PTSD counseling at Daymark", "deadline": "Ongoing" }
+    ]
+  },
+  "patient-005": {
+    "rubricScore": 81,
+    "rubricLevel": "critical",
+    "aiScore": 85,
+    "aiLevel": "critical",
+    "confidence": 0.93,
+    "combinedScore": 83,
+    "riskVector": {
+      "overdoseRisk": 92,
+      "relapseRisk": 88,
+      "treatmentDropout": 78,
+      "housingCrisis": 90,
+      "medicalComplication": 70,
+      "crisisRisk": 65
+    },
+    "rubricFactors": [
+      { "factor": "Recent overdose (OD #5 today)", "points": 30, "maxPoints": 30, "severity": "critical" },
+      { "factor": "Lifetime OD history (5 total)", "points": 20, "maxPoints": 20, "severity": "critical" },
+      { "factor": "Fentanyl + xylazine (tranq — Narcan-resistant)", "points": 20, "maxPoints": 20, "severity": "critical" },
+      { "factor": "No incarceration/release factor", "points": 0, "maxPoints": 15, "severity": "low" },
+      { "factor": "No naloxone access in past 30 days", "points": 10, "maxPoints": 10, "severity": "high" },
+      { "factor": "Chronically unhoused", "points": 5, "maxPoints": 5, "severity": "high" },
+      { "factor": "No prior MAT engagement (barrier)", "points": 0, "maxPoints": 0, "severity": "high" }
+    ],
+    "aiInsights": [
+      "5 ODs — highest OD burden in active Catawba County caseload",
+      "Xylazine co-use makes standard naloxone reversal unreliable — wound care also needed",
+      "Chronically unhoused — encampment-based outreach is primary engagement pathway",
+      "COPD compounds respiratory depression risk during OD events",
+      "No MAT history suggests severe engagement barriers — low-barrier options needed (mobile dosing)"
+    ],
+    "redFlags": [
+      { "severity": "critical", "flag": "Xylazine (tranq) detected — standard Narcan may not fully reverse", "action": "Wound care check + extended observation at CVMC", "deadline": "Today" },
+      { "severity": "critical", "flag": "5th OD — chronic high-risk unhoused patient with COPD", "action": "Low-barrier MAT referral + encampment outreach", "deadline": "Today" }
+    ]
+  },
+  "patient-009": {
+    "rubricScore": 76,
+    "rubricLevel": "high",
+    "aiScore": 79,
+    "aiLevel": "critical",
+    "confidence": 0.88,
+    "combinedScore": 78,
+    "riskVector": {
+      "overdoseRisk": 82,
+      "relapseRisk": 80,
+      "treatmentDropout": 85,
+      "housingCrisis": 90,
+      "medicalComplication": 60,
+      "crisisRisk": 75
+    },
+    "rubricFactors": [
+      { "factor": "Recent overdose (OD #3 today)", "points": 30, "maxPoints": 30, "severity": "critical" },
+      { "factor": "Lifetime OD history (3 total)", "points": 15, "maxPoints": 20, "severity": "high" },
+      { "factor": "Fentanyl + meth + benzos (tri-substance)", "points": 20, "maxPoints": 20, "severity": "critical" },
+      { "factor": "No recent incarceration/release", "points": 0, "maxPoints": 15, "severity": "low" },
+      { "factor": "No naloxone kit", "points": 10, "maxPoints": 10, "severity": "high" },
+      { "factor": "Unhoused", "points": 5, "maxPoints": 5, "severity": "high" },
+      { "factor": "Schizophrenia — untreated", "points": 5, "maxPoints": 0, "severity": "critical" }
+    ],
+    "aiInsights": [
+      "Untreated schizophrenia severely limits treatment engagement — psychiatric stabilization prerequisite for MAT",
+      "Poly-substance (tri-substance) pattern is highest-risk profile in Catawba active caseload",
+      "Unhoused + SMI = extremely high barrier to standard outpatient treatment pathways",
+      "Language barrier (Spanish-speaking) requires bilingual outreach and interpreter services"
+    ],
+    "redFlags": [
+      { "severity": "critical", "flag": "Tri-substance OD + untreated schizophrenia", "action": "Psychiatric hold assessment + low-barrier MAT", "deadline": "Today" },
+      { "severity": "high", "flag": "No insurance — barriers to MAT initiation", "action": "Medicaid enrollment at CVMC ED", "deadline": "Today" }
+    ]
+  },
+  "patient-012": {
+    "rubricScore": 65,
+    "rubricLevel": "high",
+    "aiScore": 70,
+    "aiLevel": "high",
+    "confidence": 0.86,
+    "combinedScore": 68,
+    "riskVector": {
+      "overdoseRisk": 70,
+      "relapseRisk": 68,
+      "treatmentDropout": 55,
+      "housingCrisis": 20,
+      "medicalComplication": 35,
+      "crisisRisk": 40
+    },
+    "rubricFactors": [
+      { "factor": "Recent overdose (OD #2 today)", "points": 30, "maxPoints": 30, "severity": "critical" },
+      { "factor": "Lifetime OD history (2 total)", "points": 10, "maxPoints": 20, "severity": "moderate" },
+      { "factor": "Fentanyl only — high potency, low tolerance", "points": 15, "maxPoints": 20, "severity": "high" },
+      { "factor": "No incarceration/release factor", "points": 0, "maxPoints": 15, "severity": "low" },
+      { "factor": "Naloxone at parents' home now", "points": 5, "maxPoints": 10, "severity": "moderate" },
+      { "factor": "Stable housing (parents' home)", "points": 0, "maxPoints": 5, "severity": "low" },
+      { "factor": "Young adult (21) — early intervention high ROI", "points": 5, "maxPoints": 0, "severity": "high" }
+    ],
+    "aiInsights": [
+      "Young adult (21) with 2 ODs in 6 weeks — rapid escalation pattern",
+      "Parents' home is a protective factor but may also enable access to substances",
+      "No prior MAT — high potential for MAT initiation as first treatment episode",
+      "Family engagement critical — parents should be enrolled in naloxone training"
+    ],
+    "redFlags": [
+      { "severity": "critical", "flag": "OD #2 at age 21 — 6 weeks after first OD, no treatment", "action": "ED MAT induction + family counseling", "deadline": "Today" },
+      { "severity": "high", "flag": "No prior SUD treatment — needs warm handoff at CVMC", "action": "Peer specialist engagement before discharge", "deadline": "Today" }
+    ]
+  },
+  "patient-016": {
+    "rubricScore": 67,
+    "rubricLevel": "high",
+    "aiScore": 71,
+    "aiLevel": "high",
+    "confidence": 0.85,
+    "combinedScore": 69,
+    "riskVector": {
+      "overdoseRisk": 65,
+      "relapseRisk": 75,
+      "treatmentDropout": 80,
+      "housingCrisis": 70,
+      "medicalComplication": 45,
+      "crisisRisk": 50
+    },
+    "rubricFactors": [
+      { "factor": "No OD in last 30 days (last: Jan 2026)", "points": 0, "maxPoints": 30, "severity": "low" },
+      { "factor": "Lifetime OD history (2 total)", "points": 10, "maxPoints": 20, "severity": "moderate" },
+      { "factor": "Meth + fentanyl (high-risk combo)", "points": 20, "maxPoints": 20, "severity": "critical" },
+      { "factor": "Released from CCDC 23 days ago", "points": 15, "maxPoints": 15, "severity": "high" },
+      { "factor": "Naloxone distributed by outreach", "points": 5, "maxPoints": 10, "severity": "moderate" },
+      { "factor": "Unstable housing post-release", "points": 5, "maxPoints": 5, "severity": "high" },
+      { "factor": "Declined MAT at prior contact — barrier", "points": 5, "maxPoints": 0, "severity": "high" }
+    ],
+    "aiInsights": [
+      "Post-incarceration window: 23 days since release — still in highest-risk period",
+      "No MAT bridge at CCDC release is a systemic gap — county SLA requires outreach within 48h of release",
+      "Meth + fentanyl combination is increasingly common and associated with higher lethality",
+      "Declined MAT at outreach — motivational interviewing approach recommended"
+    ],
+    "redFlags": [
+      { "severity": "high", "flag": "Post-incarceration, no MAT bridge, meth + fentanyl", "action": "Warm outreach within 24h — motivational approach", "deadline": "24 hours" },
+      { "severity": "high", "flag": "No stable housing 23 days post-release", "action": "Housing referral to Hickory Rescue Mission", "deadline": "48 hours" }
     ]
   }
 }

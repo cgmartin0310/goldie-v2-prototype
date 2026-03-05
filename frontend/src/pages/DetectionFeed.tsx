@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Radio, ArrowRight, AlertTriangle, Clock, Zap, FileText, Ambulance } from 'lucide-react';
+import { Radio, ArrowRight, AlertTriangle, Clock, Zap, FileText, Ambulance, Building2, Lock } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+
+const DEMO_COUNTY = 'Catawba';
 
 interface IncomingEvent {
   id: string;
@@ -32,8 +34,8 @@ const INITIAL_EVENTS: IncomingEvent[] = [
     patientId: 'patient-001',
     age: 34,
     gender: 'M',
-    county: 'Fayette',
-    eventDescription: 'Overdose — Narcan ×2 administered. Fentanyl + benzo suspected. Unresponsive on scene. Transported to UK HealthCare ED.',
+    county: 'Catawba',
+    eventDescription: 'Overdose — Narcan ×2 administered. Fentanyl + benzo suspected. Unresponsive on scene. Transported to Catawba Valley Medical Center ED.',
     riskScore: 78,
     riskLevel: 'critical',
     isNew: true,
@@ -43,68 +45,68 @@ const INITIAL_EVENTS: IncomingEvent[] = [
   },
   {
     id: 'ev-live-002',
-    type: 'ed',
+    type: 'ems',
     timestamp: '2026-03-05T11:20:00Z',
     patientName: 'Carlos Mendez',
     patientId: 'patient-009',
     age: 45,
     gender: 'M',
-    county: 'Scott',
-    eventDescription: 'ED arrival via EMS. Poly-substance OD — fentanyl + meth. 3rd overdose this year. Narcan administered pre-hospital.',
+    county: 'Catawba',
+    eventDescription: 'ED arrival via EMS. Poly-substance OD — fentanyl + meth + benzos. 3rd overdose this year. Narcan ×3 administered.',
     riskScore: 76,
     riskLevel: 'critical',
     isNew: true,
-    substances: ['Fentanyl', 'Methamphetamine'],
+    substances: ['Fentanyl', 'Methamphetamine', 'Benzodiazepines'],
     narcanAdministered: true,
-    source: 'Hospital ADT — Scott Co. Regional',
+    source: 'Hospital ADT — CVMC',
   },
   {
     id: 'ev-live-003',
-    type: 'ed',
+    type: 'ems',
     timestamp: '2026-03-05T06:15:00Z',
     patientName: 'Emily Davis',
     patientId: 'patient-012',
     age: 21,
     gender: 'F',
-    county: 'Jessamine',
-    eventDescription: 'OD #2 — Fentanyl. Parents called 911. Narcan administered by first responders. Transported to Jessamine Community Hospital.',
+    county: 'Catawba',
+    eventDescription: 'OD #2 — Fentanyl. Parents called 911. Narcan administered by first responders. Transported to CVMC. No prior SUD treatment.',
     riskScore: 65,
     riskLevel: 'high',
     isNew: true,
     substances: ['Fentanyl'],
     narcanAdministered: true,
-    source: 'Hospital ADT — Jessamine Community',
+    source: 'Hospital ADT — CVMC',
   },
   {
     id: 'ev-live-004',
     type: 'ems',
-    timestamp: '2026-03-04T20:30:00Z',
-    patientName: 'Jennifer Hart',
-    patientId: 'patient-006',
-    age: 24,
+    timestamp: '2026-03-04T22:10:00Z',
+    patientName: 'Ashley Reed',
+    patientId: 'patient-013',
+    age: 29,
     gender: 'F',
-    county: 'Madison',
-    eventDescription: 'OD suspected. Unresponsive at residence. Bystander administered Narcan x1 before EMS arrival. Transported to Madison Regional Medical.',
-    riskScore: 55,
-    riskLevel: 'high',
-    substances: ['Fentanyl', 'Benzodiazepines'],
+    county: 'Catawba',
+    eventDescription: 'OD #3 while PREGNANT (14 wks). Fentanyl + meth. Narcan ×2. Fetal monitoring initiated en route. Transported to CVMC OB emergency.',
+    riskScore: 85,
+    riskLevel: 'critical',
+    substances: ['Fentanyl', 'Methamphetamine'],
     narcanAdministered: true,
     source: 'EMS ePCR #2026-1831',
   },
   {
     id: 'ev-live-005',
-    type: 'detox',
+    type: 'ed',
     timestamp: '2026-03-04T15:45:00Z',
     patientName: 'Patricia Jones',
     patientId: 'patient-010',
     age: 52,
     gender: 'F',
-    county: 'Woodford',
-    eventDescription: 'Crisis evaluation at CMHC. Suicidal ideation. Poly-substance use disclosed — opioids + benzos. Safety plan completed.',
+    county: 'Catawba',
+    eventDescription: 'Crisis evaluation at Daymark. Suicidal ideation. Poly-substance use disclosed — Rx opioids + benzos. Safety plan completed.',
     riskScore: 58,
     riskLevel: 'high',
     substances: ['Rx Opioids', 'Benzodiazepines'],
-    source: 'CMHC Crisis Line',
+    source: 'Daymark Crisis Line',
   },
   {
     id: 'ev-live-006',
@@ -114,13 +116,13 @@ const INITIAL_EVENTS: IncomingEvent[] = [
     patientId: 'patient-002',
     age: 28,
     gender: 'F',
-    county: 'Fayette',
+    county: 'Catawba',
     eventDescription: 'ED evaluation post-OD. Stable. Patient declined MAT referral at discharge. Prior OD June 2025. Discharged AMA.',
     riskScore: 62,
     riskLevel: 'high',
     substances: ['Fentanyl', 'Methamphetamine'],
     narcanAdministered: true,
-    source: 'Hospital ADT — UK HealthCare',
+    source: 'Hospital ADT — CVMC',
   },
   {
     id: 'ev-live-007',
@@ -130,11 +132,11 @@ const INITIAL_EVENTS: IncomingEvent[] = [
     patientId: 'patient-007',
     age: 38,
     gender: 'M',
-    county: 'Fayette',
-    eventDescription: 'Released from FCDC after 22-day sentence. MAT prescription not bridged at release. HIGH RISK window. No naloxone issued.',
+    county: 'Catawba',
+    eventDescription: 'Released from CCDC after 22-day sentence. MAT prescription not bridged at release. HIGH RISK window. No naloxone issued.',
     riskScore: 35,
     riskLevel: 'moderate',
-    source: 'Justice System Integration',
+    source: 'Justice System Integration — CCDC',
   },
 ];
 
@@ -146,8 +148,8 @@ const NEW_EVENT: IncomingEvent = {
   patientId: 'patient-005',
   age: 55,
   gender: 'M',
-  county: 'Jefferson',
-  eventDescription: 'OD #5 — Fentanyl + Xylazine (Tranq). Multiple Narcan doses with delayed reversal due to xylazine. Transported to UofL Health.',
+  county: 'Catawba',
+  eventDescription: 'OD #5 — Fentanyl + Xylazine (Tranq). Multiple Narcan doses with delayed reversal due to xylazine component. Transported to CVMC ED.',
   riskScore: 85,
   riskLevel: 'critical',
   isNew: true,
@@ -181,12 +183,18 @@ function EventTypeIcon({ type }: { type: string }) {
   );
 }
 
+const SLA: Record<string, string> = {
+  critical: '4-hr response',
+  high: '12-hr response',
+  moderate: '24-hr response',
+  low: '72-hr response',
+};
+
 export default function DetectionFeed() {
   const navigate = useNavigate();
   const [events, setEvents] = useState<IncomingEvent[]>(INITIAL_EVENTS);
   const [streamActive, setStreamActive] = useState(true);
 
-  // Simulate a new event coming in
   useEffect(() => {
     if (!streamActive) return;
     const timer = setTimeout(() => {
@@ -214,7 +222,16 @@ export default function DetectionFeed() {
               </span>
             )}
           </div>
-          <p className="text-slate-500 text-sm">Incoming EMS ePCR, Hospital ADT, and Justice System events — auto-scored by DART</p>
+          <div className="flex items-center gap-2 text-sm text-slate-500">
+            <Building2 className="w-3.5 h-3.5 text-[#D4A843]" />
+            <span className="font-medium text-slate-700">Catawba County</span>
+            <span className="text-slate-300">·</span>
+            <span>EMS ePCR, CVMC ADT, CCDC Justice — auto-scored by DART™</span>
+            <span className="inline-flex items-center gap-1 text-xs text-slate-400 ml-1 px-2 py-0.5 bg-slate-100 rounded-full">
+              <Lock className="w-2.5 h-2.5" />
+              County-only events
+            </span>
+          </div>
         </div>
 
         <div className="flex items-center gap-3">
@@ -265,7 +282,7 @@ export default function DetectionFeed() {
           >
             <div className="p-4">
               <div className="flex items-start gap-4">
-                {/* Risk indicator */}
+                {/* Risk score */}
                 <div className="flex-shrink-0 mt-0.5">
                   <div className={`w-12 h-12 rounded-xl flex flex-col items-center justify-center text-white font-bold ${
                     event.riskLevel === 'critical' ? 'bg-red-500' :
@@ -281,17 +298,13 @@ export default function DetectionFeed() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
                     {event.isNew && i === 0 && (
-                      <span className="text-[10px] bg-red-500 text-white px-2 py-0.5 rounded-full font-bold animate-pulse">
-                        NEW
-                      </span>
+                      <span className="text-[10px] bg-red-500 text-white px-2 py-0.5 rounded-full font-bold animate-pulse">NEW</span>
                     )}
                     <EventTypeIcon type={event.type} />
                     <span className="text-sm font-bold text-slate-900">{event.patientName}</span>
-                    <span className="text-xs text-slate-400">{event.age}y {event.gender} · {event.county} Co.</span>
+                    <span className="text-xs text-slate-400">{event.age}y {event.gender} · Catawba Co.</span>
                     {event.narcanAdministered && (
-                      <span className="text-[10px] px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full font-medium">
-                        Narcan Administered
-                      </span>
+                      <span className="text-[10px] px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full font-medium">Narcan Administered</span>
                     )}
                     <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${
                       event.riskLevel === 'critical' ? 'bg-red-100 text-red-700' :
@@ -312,10 +325,14 @@ export default function DetectionFeed() {
                       {formatRelative(event.timestamp)}
                     </span>
                     {event.substances && (
-                      <span className="flex items-center gap-1">
-                        {event.substances.join(' + ')}
-                      </span>
+                      <span>{event.substances.join(' + ')}</span>
                     )}
+                    <span className={`font-semibold ${
+                      event.riskLevel === 'critical' ? 'text-red-600' :
+                      event.riskLevel === 'high' ? 'text-orange-600' : 'text-slate-500'
+                    }`}>
+                      SLA: {SLA[event.riskLevel]}
+                    </span>
                   </div>
                 </div>
 
@@ -334,10 +351,9 @@ export default function DetectionFeed() {
         ))}
       </div>
 
-      {/* Demo note */}
       <div className="mt-4 p-3 bg-[#D4A843]/5 border border-[#D4A843]/20 rounded-lg text-xs text-[#D4A843]/80 text-center">
-        Demo: Events stream in from EMS ePCR, Hospital ADT, Justice System, and Community Outreach integrations. 
-        Each event triggers automatic DART scoring.
+        Catawba County data only — events stream from EMS ePCR, CVMC ADT, CCDC Justice System, and Daymark Crisis integrations.
+        Each event triggers automatic DART scoring. Network county data is available in Analytics (aggregate only).
       </div>
     </div>
   );

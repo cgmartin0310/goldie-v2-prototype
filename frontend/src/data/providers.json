@@ -1,68 +1,112 @@
 [
   {
     "id": "prov-001",
-    "name": "BluegrassMAT Clinic",
+    "name": "Catawba Recovery Center — MAT",
     "type": "MAT Provider",
-    "address": "1801 Alexandria Dr, Lexington, KY 40504",
-    "phone": "859-555-0120",
+    "address": "810 Fairgrove Church Rd, Conover, NC 28613",
+    "phone": "828-555-0120",
     "services": ["buprenorphine", "methadone", "naltrexone", "counseling"],
     "capacity": "accepting",
     "waitTime": "1-3 days",
-    "counties": ["Fayette", "Scott", "Jessamine"]
+    "counties": ["Catawba", "Alexander", "Burke", "Caldwell"]
   },
   {
     "id": "prov-002",
-    "name": "Lexington Recovery Coalition",
+    "name": "Foothills Recovery Resources — Peer Support",
     "type": "Peer Support",
-    "address": "324 E Main St, Lexington, KY 40507",
-    "phone": "859-555-0145",
+    "address": "328 Lenoir Ave SW, Hickory, NC 28602",
+    "phone": "828-555-0145",
     "services": ["peer_support", "recovery_coaching", "naloxone_distribution", "case_management"],
     "capacity": "accepting",
     "waitTime": "Same day",
-    "counties": ["Fayette"]
+    "counties": ["Catawba", "Alexander", "Burke"]
   },
   {
     "id": "prov-003",
-    "name": "UK HealthCare BRIGHT Program",
+    "name": "Catawba Valley Medical Center — ED MOUD",
     "type": "Hospital-Based SUD",
-    "address": "800 Rose St, Lexington, KY 40536",
-    "phone": "859-555-0180",
+    "address": "810 Fairgrove Church Rd SE, Hickory, NC 28602",
+    "phone": "828-555-0180",
     "services": ["buprenorphine_induction", "ed_bupe", "warm_handoff", "withdrawal_management"],
     "capacity": "accepting",
     "waitTime": "Emergency access",
-    "counties": ["Fayette", "Madison", "Clark"]
+    "counties": ["Catawba", "Alexander", "Caldwell", "Burke"]
   },
   {
     "id": "prov-004",
-    "name": "Fayette County Health Department",
+    "name": "Catawba County Public Health",
     "type": "Public Health",
-    "address": "650 Newtown Pike, Lexington, KY 40508",
-    "phone": "859-555-0200",
+    "address": "3070 11th Ave Dr SE, Hickory, NC 28602",
+    "phone": "828-555-0200",
     "services": ["naloxone_distribution", "hep_c_testing", "hiv_testing", "harm_reduction", "case_management"],
     "capacity": "accepting",
     "waitTime": "Walk-in available",
-    "counties": ["Fayette"]
+    "counties": ["Catawba"]
   },
   {
     "id": "prov-005",
-    "name": "Centerstone Kentucky",
+    "name": "Daymark Recovery Services",
     "type": "Behavioral Health",
-    "address": "201 W Short St, Lexington, KY 40507",
-    "phone": "859-555-0167",
+    "address": "231 Government Dr NE, Hickory, NC 28601",
+    "phone": "828-555-0167",
     "services": ["outpatient_counseling", "intensive_outpatient", "psychiatric_services", "co_occurring"],
     "capacity": "limited",
-    "waitTime": "2-3 weeks",
-    "counties": ["Fayette", "Jessamine", "Woodford"]
+    "waitTime": "1-2 weeks",
+    "counties": ["Catawba", "Alexander", "Burke", "Caldwell", "Cleveland"]
   },
   {
     "id": "prov-006",
-    "name": "Housing Authority of Lexington",
+    "name": "Catawba County Social Services — Housing",
     "type": "Housing",
-    "address": "300 W Loudon Ave, Lexington, KY 40508",
-    "phone": "859-555-0188",
+    "address": "3030 11th Ave Dr SE, Hickory, NC 28602",
+    "phone": "828-555-0188",
     "services": ["emergency_shelter", "transitional_housing", "permanent_supportive_housing", "housing_navigation"],
     "capacity": "limited",
     "waitTime": "30-45 days",
-    "counties": ["Fayette"]
+    "counties": ["Catawba"]
+  },
+  {
+    "id": "prov-007",
+    "name": "Grace Hospital — SUD Services",
+    "type": "Hospital-Based SUD",
+    "address": "2201 S Sterling St, Morganton, NC 28655",
+    "phone": "828-555-0210",
+    "services": ["detox", "withdrawal_management", "ed_bupe", "counseling"],
+    "capacity": "accepting",
+    "waitTime": "Emergency access",
+    "counties": ["Burke", "Caldwell"]
+  },
+  {
+    "id": "prov-008",
+    "name": "Hickory Rescue Mission",
+    "type": "Housing / Shelter",
+    "address": "310 2nd Ave NW, Hickory, NC 28601",
+    "phone": "828-555-0225",
+    "services": ["emergency_shelter", "transitional_housing", "case_management", "peer_support"],
+    "capacity": "limited",
+    "waitTime": "24-48 hours",
+    "counties": ["Catawba", "Alexander"]
+  },
+  {
+    "id": "prov-009",
+    "name": "Alliance Health — Managed Care",
+    "type": "Managed Care Organization",
+    "address": "4600 Emperor Blvd, Durham, NC 27703",
+    "phone": "919-555-0150",
+    "services": ["care_management", "prior_auth", "medicaid_behavioral_health"],
+    "capacity": "accepting",
+    "waitTime": "N/A",
+    "counties": ["Catawba", "Alexander", "Burke", "Caldwell", "Cleveland", "Rowan", "Surry"]
+  },
+  {
+    "id": "prov-010",
+    "name": "Catawba Valley Recovery Community",
+    "type": "Recovery Community Organization",
+    "address": "1100 2nd St NE, Hickory, NC 28601",
+    "phone": "828-555-0175",
+    "services": ["peer_support", "naloxone_distribution", "recovery_coaching", "drop_in_center"],
+    "capacity": "accepting",
+    "waitTime": "Walk-in",
+    "counties": ["Catawba"]
   }
 ]

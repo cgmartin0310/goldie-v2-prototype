@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts';
-import { Shield, Zap, AlertTriangle, CheckCircle, Brain, Activity, ChevronRight } from 'lucide-react';
+import { Shield, Zap, AlertTriangle, CheckCircle, Brain, Activity, ChevronRight, Clock } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import riskScores from '@/data/risk-scores.json';
@@ -265,13 +265,89 @@ export default function DartPanel({ patient, onGeneratePlan }: DartPanelProps) {
         </Card>
       </div>
 
+      {/* DART Rubric breakdown — investor deck Slide 7 */}
+      <div className="mt-5 p-4 bg-slate-50 rounded-xl border border-slate-200">
+        <div className="flex items-center gap-2 mb-3">
+          <Shield className="w-4 h-4 text-[#D4A843]" />
+          <span className="text-sm font-bold text-slate-800">DART™ Rubric — 100-Point Scoring Breakdown</span>
+          <span className="text-[10px] bg-[#D4A843]/10 text-[#D4A843] px-2 py-0.5 rounded-full font-semibold ml-auto">Investor Deck · Slide 7</span>
+        </div>
+        <div className="grid grid-cols-3 gap-2">
+          {[
+            { category: 'Recent Overdose (30d)', max: 30, color: '#ef4444' },
+            { category: 'Lifetime OD History', max: 20, color: '#f97316' },
+            { category: 'High-Risk Substance Use', max: 20, color: '#f59e0b' },
+            { category: 'Recent Incarceration/Tx Release', max: 15, color: '#8b5cf6' },
+            { category: 'Naloxone Access', max: 10, color: '#3b82f6' },
+            { category: 'Housing Stability', max: 5, color: '#22c55e' },
+          ].map(item => (
+            <div key={item.category} className="bg-white rounded-lg p-2.5 border border-slate-100">
+              <div className="text-xs text-slate-600 leading-tight mb-1">{item.category}</div>
+              <div className="flex items-center gap-1.5">
+                <div className="flex-1 bg-slate-100 rounded-full h-1.5">
+                  <div className="h-full rounded-full" style={{ width: '100%', background: item.color }} />
+                </div>
+                <span className="text-xs font-bold flex-shrink-0" style={{ color: item.color }}>{item.max} pts</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Response SLA table */}
+      <div className="mt-4 rounded-xl border border-slate-200 overflow-hidden">
+        <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-200 flex items-center gap-2">
+          <Clock className="w-3.5 h-3.5 text-slate-400" />
+          <span className="text-xs font-semibold text-slate-700 uppercase tracking-wider">Response Time SLAs by Risk Level</span>
+        </div>
+        <table className="w-full text-xs">
+          <thead>
+            <tr className="border-b border-slate-100">
+              <th className="px-4 py-2 text-left text-slate-400 font-medium">Risk Level</th>
+              <th className="px-4 py-2 text-left text-slate-400 font-medium">Score Range</th>
+              <th className="px-4 py-2 text-left text-slate-400 font-medium">Response Time</th>
+              <th className="px-4 py-2 text-left text-slate-400 font-medium">Encounter Freq.</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              { level: 'Critical', range: '75–100', response: '4 hours', freq: 'Weekly', color: '#ef4444', bg: '#fef2f2' },
+              { level: 'High',     range: '50–74',  response: '12 hours', freq: 'Monthly', color: '#f97316', bg: '#fff7ed' },
+              { level: 'Moderate', range: '25–49',  response: '24 hours', freq: 'Bi-monthly', color: '#f59e0b', bg: '#fffbeb' },
+              { level: 'Low',      range: '0–24',   response: '72 hours', freq: 'As needed', color: '#22c55e', bg: '#f0fdf4' },
+            ].map(row => {
+              const isCurrent = (
+                (row.level === 'Critical' && patient.riskLevel === 'critical') ||
+                (row.level === 'High' && patient.riskLevel === 'high') ||
+                (row.level === 'Moderate' && patient.riskLevel === 'moderate') ||
+                (row.level === 'Low' && patient.riskLevel === 'low')
+              );
+              return (
+                <tr key={row.level} className={`border-b border-slate-50 ${isCurrent ? 'font-semibold' : ''}`}
+                  style={isCurrent ? { background: row.bg } : {}}>
+                  <td className="px-4 py-2.5">
+                    <span className="px-2 py-0.5 rounded-full text-white text-[10px] font-bold" style={{ background: row.color }}>
+                      {row.level}
+                    </span>
+                    {isCurrent && <span className="ml-2 text-[10px] text-slate-500">← this patient</span>}
+                  </td>
+                  <td className="px-4 py-2.5 text-slate-600">{row.range}</td>
+                  <td className="px-4 py-2.5 font-medium" style={{ color: isCurrent ? row.color : '#64748b' }}>{row.response}</td>
+                  <td className="px-4 py-2.5 text-slate-600">{row.freq}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
       {/* Generate Plan CTA */}
       {(complete || hasAssessmentData) && (
         <div className="mt-5 p-4 bg-[#D4A843]/5 border border-[#D4A843]/20 rounded-xl flex items-center justify-between animate-fade-in">
           <div>
             <div className="font-semibold text-sm text-slate-900">Ready to generate service plan</div>
             <div className="text-xs text-slate-500 mt-0.5">
-              Based on DART risk vector + ASAM criteria + available provider capacity in {patient.id === 'patient-001' ? 'Fayette' : ''} County
+              Based on DART risk vector + ASAM criteria + available provider capacity in Catawba County
             </div>
           </div>
           <Button onClick={onGeneratePlan} className="gap-2">

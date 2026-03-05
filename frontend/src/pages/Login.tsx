@@ -53,8 +53,8 @@ export default function Login() {
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4">
             {[
-              { value: '50%', label: 'of OD victims refuse transport' },
-              { value: '6.4%', label: 'initiate treatment in 30 days' },
+              { value: '9', label: 'NC counties signed · $192M opportunity' },
+              { value: '6.4%', label: 'initiate treatment in 30 days (vs 21% with Goldie)' },
               { value: '73%', label: 'repeat OD risk without intervention' },
             ].map(stat => (
               <div key={stat.label} className="rounded-xl p-4" style={{ background: 'rgba(255,255,255,0.05)' }}>
@@ -82,10 +82,18 @@ export default function Login() {
             <div className="mb-6">
               <div className="flex items-center gap-2 mb-1">
                 <Lock className="w-4 h-4 text-[#D4A843]" />
-                <span className="text-xs font-medium text-[#D4A843] uppercase tracking-wider">Secure Access</span>
+                <span className="text-xs font-medium text-[#D4A843] uppercase tracking-wider">Secure County Access</span>
               </div>
               <h2 className="text-2xl font-bold text-white">Sign In</h2>
-              <p className="text-white/40 text-sm mt-1">Investor demo environment</p>
+              <div className="flex items-center gap-2 mt-2 px-3 py-2 rounded-lg" style={{ background: 'rgba(212,168,67,0.08)', border: '1px solid rgba(212,168,67,0.2)' }}>
+                <div className="w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(212,168,67,0.15)' }}>
+                  <span className="text-[#D4A843] text-xs font-bold">C</span>
+                </div>
+                <div>
+                  <div className="text-xs font-semibold text-white">Catawba County Health Department</div>
+                  <div className="text-[10px] text-white/40">Goldie NC Network · Investor Demo</div>
+                </div>
+              </div>
             </div>
 
             <form onSubmit={handleLogin} className="space-y-4">

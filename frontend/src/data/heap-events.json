@@ -7,12 +7,12 @@
     "eventType": "overdose",
     "severity": "critical",
     "title": "OD #1 — Narcan x2",
-    "description": "Fentanyl overdose, unresponsive. EMS administered 2x Narcan. Transported to UK HealthCare ED. Refused further treatment, AMA discharge.",
-    "location": "Residence — 247 E 3rd St",
+    "description": "Fentanyl overdose, unresponsive. EMS administered 2x Narcan. Transported to Catawba Valley Medical Center ED. Refused further treatment, AMA discharge.",
+    "location": "Residence — 212 Main Ave NW, Hickory, NC",
     "source": "EMS / ePCR",
     "substances": ["fentanyl"],
     "naluResponsed": true,
-    "hospitalId": "uk-healthcare"
+    "hospitalId": "cvmc"
   },
   {
     "id": "evt-002",
@@ -21,12 +21,12 @@
     "domain": "SUD",
     "eventType": "detox",
     "severity": "moderate",
-    "title": "Detox Admission — FCMH",
-    "description": "Self-admitted to Fayette County Medical detox program. 7-day stay. Referred to MAT program on discharge.",
-    "location": "Fayette County Medical Hospital",
+    "title": "Detox Admission — CVMC",
+    "description": "Self-admitted to Catawba Valley Medical Center detox program. 7-day stay. Referred to MAT program on discharge.",
+    "location": "Catawba Valley Medical Center",
     "source": "Hospital ADT",
     "substances": ["fentanyl"],
-    "hospitalId": "fcmh"
+    "hospitalId": "cvmc"
   },
   {
     "id": "evt-003",
@@ -37,8 +37,8 @@
     "severity": "moderate",
     "title": "Depression Screening — PHQ-9 Score: 16",
     "description": "Initial mental health assessment. PHQ-9 score 16 (Moderately Severe Depression). Referred to behavioral health counseling. Not initiated due to waitlist.",
-    "location": "Community Health Center",
-    "source": "Community Health Center"
+    "location": "Catawba County Public Health",
+    "source": "Catawba Co. Public Health"
   },
   {
     "id": "evt-004",
@@ -49,7 +49,7 @@
     "severity": "high",
     "title": "Hepatitis C Diagnosis",
     "description": "Positive HCV antibody test. Genotype 1a confirmed. Liver enzymes elevated. Referred to hepatology, appointment scheduled for 6 weeks.",
-    "location": "Fayette County Health Department",
+    "location": "Catawba County Public Health",
     "source": "Health Dept Records"
   },
   {
@@ -60,8 +60,8 @@
     "eventType": "housing_loss",
     "severity": "high",
     "title": "Eviction — Lost Housing",
-    "description": "Evicted from rental property at 247 E 3rd St. Cited non-payment of rent. Entered homeless status. Applied to Lexington Rescue Mission, 45-day waitlist.",
-    "location": "247 E 3rd St, Lexington",
+    "description": "Evicted from rental property at 212 Main Ave NW, Hickory. Cited non-payment of rent. Entered homeless status. Applied to Hickory Rescue Mission, 45-day waitlist.",
+    "location": "212 Main Ave NW, Hickory, NC",
     "source": "Outreach Worker Report"
   },
   {
@@ -72,13 +72,13 @@
     "eventType": "overdose",
     "severity": "critical",
     "title": "OD #2 — Narcan + Benzos",
-    "description": "Fentanyl + benzodiazepine overdose. Found unresponsive under bridge. EMS administered Narcan x3 — slow reversal due to benzo involvement. Transported to FCMH. 2-day observation.",
-    "location": "Under Vine St Bridge",
+    "description": "Fentanyl + benzodiazepine overdose. Found unresponsive under 2nd St bridge. EMS administered Narcan x3 — slow reversal due to benzo involvement. Transported to CVMC. 2-day observation.",
+    "location": "Near 2nd St Bridge, Hickory, NC",
     "source": "EMS / ePCR",
     "substances": ["fentanyl", "benzodiazepines"],
     "dangerousCombo": true,
     "naluResponsed": true,
-    "hospitalId": "fcmh"
+    "hospitalId": "cvmc"
   },
   {
     "id": "evt-007",
@@ -88,8 +88,8 @@
     "eventType": "mat_start",
     "severity": "low",
     "title": "MAT Initiated — Suboxone 16mg",
-    "description": "Buprenorphine/naloxone (Suboxone 16mg) initiated at BluegrassMAT clinic. Engaged with peer specialist Tanya Williams. Stable for first 6 weeks.",
-    "location": "BluegrassMAT Clinic",
+    "description": "Buprenorphine/naloxone (Suboxone 16mg) initiated at Catawba Recovery Center. Engaged with peer specialist Tanya Williams. Stable for first 6 weeks.",
+    "location": "Catawba Recovery Center",
     "source": "Provider Records"
   },
   {
@@ -100,8 +100,8 @@
     "eventType": "housing_gain",
     "severity": "low",
     "title": "Entered Emergency Shelter",
-    "description": "Admitted to Lexington Rescue Mission emergency shelter. Stable housing secured after 2-month wait. Case manager assigned.",
-    "location": "Lexington Rescue Mission",
+    "description": "Admitted to Hickory Rescue Mission emergency shelter. Stable housing secured after 2-month wait. Case manager assigned.",
+    "location": "Hickory Rescue Mission",
     "source": "HMIS"
   },
   {
@@ -113,7 +113,7 @@
     "severity": "high",
     "title": "MAT Discontinued — Patient Request",
     "description": "Marcus stopped Suboxone without taper. Cited side effects and desire to be 'completely clean.' Risk of relapse elevated significantly. Peer specialist notified.",
-    "location": "BluegrassMAT Clinic",
+    "location": "Catawba Recovery Center",
     "source": "Provider Records"
   },
   {
@@ -124,8 +124,8 @@
     "eventType": "justice",
     "severity": "moderate",
     "title": "Arrested — Possession Charge",
-    "description": "Arrested on drug possession charge (Schedule I). Remanded to Fayette County Detention Center pending trial. Bond set at $5,000.",
-    "location": "Fayette County",
+    "description": "Arrested on drug possession charge (Schedule I). Remanded to Catawba County Detention Center pending trial. Bond set at $5,000.",
+    "location": "Catawba County",
     "source": "Justice System Integration"
   },
   {
@@ -137,7 +137,7 @@
     "severity": "critical",
     "title": "Mental Health Crisis — Incarcerated",
     "description": "Reported suicidal ideation to jail medical staff. Placed on mental health watch. Psychiatrist consult. Started on antidepressant.",
-    "location": "FCDC Medical Unit",
+    "location": "CCDC Medical Unit",
     "source": "Jail Health Records"
   },
   {
@@ -148,12 +148,12 @@
     "eventType": "overdose",
     "severity": "critical",
     "title": "OD #3 — Released from Custody (Day 1)",
-    "description": "Overdosed less than 24 hours after release from FCDC. Fentanyl, significantly reduced tolerance post-incarceration. EMS + Narcan. Pattern consistent with incarceration release risk.",
-    "location": "Near FCDC, Lexington",
+    "description": "Overdosed less than 24 hours after release from CCDC. Fentanyl, significantly reduced tolerance post-incarceration. EMS + Narcan. Pattern consistent with incarceration release risk.",
+    "location": "Near Catawba County Detention Center, Hickory, NC",
     "source": "EMS / ePCR",
     "substances": ["fentanyl"],
     "naluResponsed": true,
-    "hospitalId": "uk-healthcare"
+    "hospitalId": "cvmc"
   },
   {
     "id": "evt-013",
@@ -164,7 +164,7 @@
     "severity": "low",
     "title": "MAT Re-initiated — Suboxone 8mg",
     "description": "Re-enrolled in MAT program after post-release OD. Lower initial dose 8mg due to post-incarceration tolerance changes. Weekly check-ins scheduled.",
-    "location": "BluegrassMAT Clinic",
+    "location": "Catawba Recovery Center",
     "source": "Provider Records"
   },
   {
@@ -176,8 +176,8 @@
     "severity": "moderate",
     "title": "Mental Health Follow-up — Stable",
     "description": "Follow-up psychiatric evaluation. Depression symptoms improved on medication. PHQ-9 score 9. Continued on antidepressant. No suicidal ideation reported.",
-    "location": "Community Mental Health Center",
-    "source": "CMHC Records"
+    "location": "Daymark Recovery Services",
+    "source": "Daymark Records"
   },
   {
     "id": "evt-015",
@@ -188,7 +188,7 @@
     "severity": "high",
     "title": "MAT Stopped — Lost Insurance Coverage",
     "description": "Suboxone prescription lapsed when Medicaid coverage disrupted after address change. Unable to get prior auth in time. 3-week gap in coverage.",
-    "location": "BluegrassMAT Clinic",
+    "location": "Catawba Recovery Center",
     "source": "Provider Records"
   },
   {
@@ -199,8 +199,8 @@
     "eventType": "justice",
     "severity": "moderate",
     "title": "Re-Arrested — Violation of Probation",
-    "description": "Arrested on probation violation. Remanded to FCDC for 45-day sentence.",
-    "location": "Fayette County",
+    "description": "Arrested on probation violation. Remanded to CCDC for 45-day sentence.",
+    "location": "Catawba County",
     "source": "Justice System Integration"
   },
   {
@@ -211,8 +211,8 @@
     "eventType": "release",
     "severity": "high",
     "title": "Released from Custody — High Risk Window",
-    "description": "Released from FCDC after 45-day sentence. No MAT bridge prescription provided at release. No naloxone kit. Returned to emergency shelter. HIGH RISK: post-incarceration OD window.",
-    "location": "FCDC",
+    "description": "Released from CCDC after 45-day sentence. No MAT bridge prescription provided at release. No naloxone kit. Returned to emergency shelter. HIGH RISK: post-incarceration OD window.",
+    "location": "Catawba County Detention Center",
     "source": "Justice System Integration"
   },
   {
@@ -224,7 +224,7 @@
     "severity": "moderate",
     "title": "Elevated Liver Enzymes — Hep C Progression",
     "description": "Lab results: ALT 145 U/L (normal <56), AST 98 U/L. Liver disease progression concerning. Hep C treatment still not initiated. Hepatology referral renewed.",
-    "location": "Fayette County Health Dept",
+    "location": "Catawba County Public Health",
     "source": "Health Dept Records"
   },
   {
@@ -235,14 +235,14 @@
     "eventType": "overdose",
     "severity": "critical",
     "title": "OD #4 — TODAY (Narcan administered)",
-    "description": "Fentanyl + benzodiazepine overdose. Found unresponsive at Lexington Rescue Mission. Staff administered Narcan. EMS dispatched. Transported to UK HealthCare ED. DART assessment triggered.",
-    "location": "Lexington Rescue Mission",
+    "description": "Fentanyl + benzodiazepine overdose. Found unresponsive at Hickory Rescue Mission. Staff administered Narcan. EMS dispatched. Transported to Catawba Valley Medical Center ED. DART assessment triggered.",
+    "location": "Hickory Rescue Mission",
     "source": "EMS / ePCR — LIVE",
     "substances": ["fentanyl", "benzodiazepines"],
     "dangerousCombo": true,
     "naluResponsed": true,
     "isToday": true,
-    "hospitalId": "uk-healthcare"
+    "hospitalId": "cvmc"
   },
   {
     "id": "evt-020",
@@ -252,8 +252,9 @@
     "eventType": "overdose",
     "severity": "critical",
     "title": "OD #1",
-    "description": "Fentanyl overdose at residence.",
-    "source": "EMS / ePCR"
+    "description": "Fentanyl overdose at residence in Hickory, NC. EMS responded.",
+    "source": "EMS / ePCR",
+    "location": "822 3rd Ave NW, Hickory, NC"
   },
   {
     "id": "evt-021",
@@ -263,7 +264,274 @@
     "eventType": "overdose",
     "severity": "critical",
     "title": "OD #2",
-    "description": "Fentanyl + meth overdose.",
-    "source": "EMS / ePCR"
+    "description": "Fentanyl + meth overdose. Narcan administered. Transported to CVMC.",
+    "source": "EMS / ePCR",
+    "location": "Hickory, NC"
+  },
+  {
+    "id": "evt-022",
+    "patientId": "patient-002",
+    "date": "2026-03-04T09:15:00Z",
+    "domain": "SUD",
+    "eventType": "ed_visit",
+    "severity": "high",
+    "title": "ED Visit Post-OD — Declined MAT",
+    "description": "Post-OD evaluation at CVMC ED. Medically stable. Patient declined MAT referral. Discharged AMA. Peer outreach scheduled.",
+    "source": "Hospital ADT — CVMC",
+    "location": "Catawba Valley Medical Center ED"
+  },
+  {
+    "id": "evt-030",
+    "patientId": "patient-013",
+    "date": "2025-07-08T16:30:00Z",
+    "domain": "SUD",
+    "eventType": "overdose",
+    "severity": "critical",
+    "title": "OD #1 — Fentanyl",
+    "description": "Fentanyl overdose at residence. Roommate called 911. Narcan administered. Transported to CVMC ED. Pregnancy not yet known.",
+    "location": "427 7th St NE, Hickory, NC",
+    "source": "EMS / ePCR",
+    "substances": ["fentanyl"],
+    "naluResponsed": true,
+    "hospitalId": "cvmc"
+  },
+  {
+    "id": "evt-031",
+    "patientId": "patient-013",
+    "date": "2025-08-01T10:00:00Z",
+    "domain": "SUD",
+    "eventType": "mat_start",
+    "severity": "low",
+    "title": "MAT Initiated — Subutex 8mg",
+    "description": "Buprenorphine mono-product (Subutex) initiated — preferred for reproductive-age women. Stable for 6 weeks then lost to follow-up.",
+    "location": "Catawba Recovery Center",
+    "source": "Provider Records"
+  },
+  {
+    "id": "evt-032",
+    "patientId": "patient-013",
+    "date": "2025-09-14T00:00:00Z",
+    "domain": "SUD",
+    "eventType": "mat_discontinue",
+    "severity": "high",
+    "title": "MAT Discontinued — Lost to Follow-Up",
+    "description": "Ashley missed 3 consecutive appointments. Subutex prescription lapsed. Outreach attempted x2, no response.",
+    "location": "Catawba Recovery Center",
+    "source": "Provider Records"
+  },
+  {
+    "id": "evt-033",
+    "patientId": "patient-013",
+    "date": "2025-11-22T02:45:00Z",
+    "domain": "SUD",
+    "eventType": "overdose",
+    "severity": "critical",
+    "title": "OD #2 — Fentanyl + Meth",
+    "description": "Poly-substance overdose in a vehicle behind 1st Ave, Hickory. Bystander called 911. Narcan administered x2. Transported to CVMC. Discharged next day.",
+    "location": "1st Ave NW, Hickory, NC",
+    "source": "EMS / ePCR",
+    "substances": ["fentanyl", "methamphetamine"],
+    "naluResponsed": true,
+    "hospitalId": "cvmc"
+  },
+  {
+    "id": "evt-034",
+    "patientId": "patient-013",
+    "date": "2025-12-10T14:00:00Z",
+    "domain": "Medical",
+    "eventType": "diagnosis",
+    "severity": "high",
+    "title": "Pregnancy Confirmed — ~8 weeks",
+    "description": "Positive pregnancy test at Catawba Co. Public Health. Estimated 8 weeks gestation. Referred to OB/GYN and high-risk pregnancy program. SUD and pregnancy case conference opened.",
+    "location": "Catawba County Public Health",
+    "source": "Health Dept Records"
+  },
+  {
+    "id": "evt-035",
+    "patientId": "patient-013",
+    "date": "2026-01-15T11:00:00Z",
+    "domain": "Mental Health",
+    "eventType": "assessment",
+    "severity": "moderate",
+    "title": "Mental Health Assessment — Prenatal",
+    "description": "Edinburgh Postnatal Depression Scale (antenatal): Score 18 (high risk). Referred to perinatal mental health services. Waitlist 3 weeks.",
+    "location": "CVMC Maternal Health",
+    "source": "CVMC Records"
+  },
+  {
+    "id": "evt-036",
+    "patientId": "patient-013",
+    "date": "2026-03-04T22:10:00Z",
+    "domain": "SUD",
+    "eventType": "overdose",
+    "severity": "critical",
+    "title": "OD #3 — PREGNANT — TODAY",
+    "description": "Fentanyl + meth overdose at 14 weeks gestation. Found unresponsive. Narcan administered x2. Fetal monitoring en route. Transported to CVMC OB emergency. DART alert triggered. Dual patient status: mother + fetus.",
+    "location": "427 7th St NE, Hickory, NC",
+    "source": "EMS / ePCR — LIVE",
+    "substances": ["fentanyl", "methamphetamine"],
+    "dangerousCombo": true,
+    "naluResponsed": true,
+    "isToday": true,
+    "hospitalId": "cvmc"
+  },
+  {
+    "id": "evt-040",
+    "patientId": "patient-014",
+    "date": "2025-07-15T09:00:00Z",
+    "domain": "Medical",
+    "eventType": "assessment",
+    "severity": "moderate",
+    "title": "VA PTSD Assessment",
+    "description": "PCL-5 score 52 (moderate PTSD). Two combat deployments (Iraq 2004, Afghanistan 2009). Chronic pain from shrapnel injury. Referred to SUD treatment for co-occurring alcohol/opioid use.",
+    "location": "Salisbury VA Medical Center",
+    "source": "VA Records"
+  },
+  {
+    "id": "evt-041",
+    "patientId": "patient-014",
+    "date": "2025-09-12T18:00:00Z",
+    "domain": "SUD",
+    "eventType": "overdose",
+    "severity": "high",
+    "title": "Near-OD — Alcohol + Opioids",
+    "description": "Family called 911 after Raymond was unresponsive. Alcohol + Rx opioids (hydrocodone). Naloxone not required — primarily alcohol. Transported to CVMC, 1-day observation.",
+    "location": "1820 Clement Blvd NW, Hickory, NC",
+    "source": "EMS / ePCR",
+    "substances": ["alcohol", "rx_opioids"],
+    "hospitalId": "cvmc"
+  },
+  {
+    "id": "evt-042",
+    "patientId": "patient-014",
+    "date": "2025-10-15T10:00:00Z",
+    "domain": "SUD",
+    "eventType": "mat_start",
+    "severity": "low",
+    "title": "Vivitrol Initiated — Naltrexone IM",
+    "description": "Naltrexone monthly injection (Vivitrol) initiated. Blocks opioid receptors and reduces alcohol craving. VA-eligible medication. Monthly injection scheduled at Catawba Recovery Center.",
+    "location": "Catawba Recovery Center",
+    "source": "Provider Records"
+  },
+  {
+    "id": "evt-043",
+    "patientId": "patient-014",
+    "date": "2025-11-15T10:00:00Z",
+    "domain": "SUD",
+    "eventType": "mat_checkin",
+    "severity": "low",
+    "title": "Vivitrol Month 2 — Stable",
+    "description": "Second monthly injection administered. Patient reports no alcohol use in 30 days. Pain management plan revised with non-opioid analgesics. PTSD counseling engaged.",
+    "location": "Catawba Recovery Center",
+    "source": "Provider Records"
+  },
+  {
+    "id": "evt-044",
+    "patientId": "patient-014",
+    "date": "2026-01-20T11:00:00Z",
+    "domain": "Mental Health",
+    "eventType": "assessment",
+    "severity": "low",
+    "title": "PTSD Follow-up — Improving",
+    "description": "PCL-5 score 34 (mild). Significant improvement from 52 at intake. Prolonged Exposure therapy initiated. Employment counseling referral made.",
+    "location": "Daymark Recovery Services",
+    "source": "Daymark Records"
+  },
+  {
+    "id": "evt-045",
+    "patientId": "patient-014",
+    "date": "2026-03-04T10:30:00Z",
+    "domain": "SUD",
+    "eventType": "mat_checkin",
+    "severity": "low",
+    "title": "Vivitrol Month 5 — Stable",
+    "description": "5th monthly injection administered. Patient remains abstinent from alcohol and opioids. Returned to part-time work. Family engagement noted. Progressing well.",
+    "location": "Catawba Recovery Center",
+    "source": "Provider Records"
+  },
+  {
+    "id": "evt-050",
+    "patientId": "patient-005",
+    "date": "2026-03-05T08:45:00Z",
+    "domain": "SUD",
+    "eventType": "overdose",
+    "severity": "critical",
+    "title": "OD #5 — Fentanyl + Xylazine",
+    "description": "Fentanyl + xylazine (tranq) overdose. Multiple Narcan doses with delayed reversal due to xylazine. Transported to CVMC ED.",
+    "location": "1st Ave NW encampment, Hickory, NC",
+    "source": "EMS / ePCR",
+    "substances": ["fentanyl", "xylazine"],
+    "naluResponsed": true,
+    "isToday": true,
+    "hospitalId": "cvmc"
+  },
+  {
+    "id": "evt-051",
+    "patientId": "patient-009",
+    "date": "2026-03-05T11:20:00Z",
+    "domain": "SUD",
+    "eventType": "ems_call",
+    "severity": "critical",
+    "title": "EMS Call — Poly-substance OD",
+    "description": "Poly-substance overdose, unresponsive near 1st St SW overpass. Fentanyl + meth + benzos. 3rd OD this year. Narcan administered x3.",
+    "location": "1st St SW overpass, Hickory, NC",
+    "source": "EMS / ePCR",
+    "substances": ["fentanyl", "methamphetamine", "benzodiazepines"],
+    "naluResponsed": true,
+    "isToday": true,
+    "hospitalId": "cvmc"
+  },
+  {
+    "id": "evt-052",
+    "patientId": "patient-012",
+    "date": "2026-03-05T06:15:00Z",
+    "domain": "SUD",
+    "eventType": "overdose",
+    "severity": "critical",
+    "title": "OD #2 — Fentanyl",
+    "description": "OD #2 — Fentanyl. Parents called 911. Narcan administered by first responders. Transported to CVMC.",
+    "source": "EMS / ePCR",
+    "location": "3310 Oxford St, Maiden, NC",
+    "substances": ["fentanyl"],
+    "naluResponsed": true,
+    "isToday": true,
+    "hospitalId": "cvmc"
+  },
+  {
+    "id": "evt-053",
+    "patientId": "patient-016",
+    "date": "2026-02-10T08:00:00Z",
+    "domain": "Social",
+    "eventType": "release",
+    "severity": "high",
+    "title": "Released from CCDC — High Risk Window",
+    "description": "Released from Catawba County Detention Center after 60-day sentence. No MAT bridge. No naloxone issued. High-risk post-incarceration window.",
+    "location": "Catawba County Detention Center",
+    "source": "Justice System Integration"
+  },
+  {
+    "id": "evt-054",
+    "patientId": "patient-016",
+    "date": "2026-02-25T14:00:00Z",
+    "domain": "SUD",
+    "eventType": "outreach",
+    "severity": "moderate",
+    "title": "Street Outreach Contact",
+    "description": "Outreach worker contacted Kevin near downtown shelter. Naloxone kit distributed. Declined MAT referral. Will consider peer support.",
+    "location": "Downtown Hickory shelter area",
+    "source": "Outreach Worker Report"
+  },
+  {
+    "id": "evt-055",
+    "patientId": "patient-016",
+    "date": "2026-03-02T19:40:00Z",
+    "domain": "SUD",
+    "eventType": "ed_visit",
+    "severity": "high",
+    "title": "ED Visit — Meth + Fentanyl Intoxication",
+    "description": "Brought to CVMC ED by bystander. Agitated, paranoid. Meth + fentanyl detected on UDS. Observed 8 hours, medically cleared. DART score updated.",
+    "location": "Catawba Valley Medical Center ED",
+    "source": "Hospital ADT — CVMC",
+    "substances": ["methamphetamine", "fentanyl"]
   }
 ]

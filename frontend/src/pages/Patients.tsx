@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Filter, ArrowRight, AlertTriangle, MapPin, Clock } from 'lucide-react';
+import { Search, Filter, ArrowRight, MapPin, Clock, Building2, Lock } from 'lucide-react';
 import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import patients from '@/data/patients.json';
+
+const DEMO_COUNTY = 'Catawba';
 
 const RISK_COLORS: Record<string, { bg: string; text: string; dot: string }> = {
   critical: { bg: 'bg-red-100', text: 'text-red-700', dot: 'bg-red-500' },
@@ -12,14 +13,24 @@ const RISK_COLORS: Record<string, { bg: string; text: string; dot: string }> = {
   low: { bg: 'bg-green-100', text: 'text-green-700', dot: 'bg-green-500' },
 };
 
+const SLA: Record<string, string> = {
+  critical: '4h response',
+  high: '12h response',
+  moderate: '24h response',
+  low: '72h response',
+};
+
 export default function Patients() {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [filterRisk, setFilterRisk] = useState<string>('all');
 
-  const filtered = patients
+  // County-tenant: only show patients in the logged-in county
+  const countyPatients = patients.filter(p => p.county === DEMO_COUNTY);
+
+  const filtered = countyPatients
     .filter(p => {
-      if (search && !p.name.toLowerCase().includes(search.toLowerCase()) && !p.county.toLowerCase().includes(search.toLowerCase())) return false;
+      if (search && !p.name.toLowerCase().includes(search.toLowerCase())) return false;
       if (filterRisk !== 'all' && p.riskLevel !== filterRisk) return false;
       return true;
     })
@@ -30,7 +41,16 @@ export default function Patients() {
       <div className="flex items-center justify-between mb-5">
         <div>
           <h1 className="text-xl font-bold text-slate-900">Patients</h1>
-          <p className="text-sm text-slate-500 mt-0.5">{patients.length} patients across 12 counties</p>
+          <div className="flex items-center gap-2 text-sm text-slate-500 mt-0.5">
+            <Building2 className="w-3.5 h-3.5 text-[#D4A843]" />
+            <span className="font-medium text-slate-700">Catawba County</span>
+            <span className="text-slate-300">·</span>
+            <span>{countyPatients.length} patients</span>
+            <span className="inline-flex items-center gap-1 text-xs text-slate-400 ml-1 px-2 py-0.5 bg-slate-100 rounded-full">
+              <Lock className="w-2.5 h-2.5" />
+              County-only view
+            </span>
+          </div>
         </div>
       </div>
 
@@ -40,7 +60,7 @@ export default function Patients() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <input
             type="text"
-            placeholder="Search by name or county..."
+            placeholder="Search by name..."
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#D4A843] focus:border-[#D4A843]"
@@ -56,7 +76,9 @@ export default function Patients() {
                 filterRisk === risk ? 'bg-[#1a1a2e] text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
               }`}
             >
-              {risk === 'all' ? `All (${patients.length})` : `${risk.charAt(0).toUpperCase() + risk.slice(1)} (${patients.filter(p => p.riskLevel === risk).length})`}
+              {risk === 'all'
+                ? `All (${countyPatients.length})`
+                : `${risk.charAt(0).toUpperCase() + risk.slice(1)} (${countyPatients.filter(p => p.riskLevel === risk).length})`}
             </button>
           ))}
         </div>
@@ -103,7 +125,7 @@ export default function Patients() {
                 <div className="space-y-1.5 text-xs text-slate-500">
                   <div className="flex items-center gap-1.5">
                     <MapPin className="w-3 h-3" />
-                    <span>{patient.county} County · {patient.housing?.replace(/_/g, ' ')}</span>
+                    <span className="truncate">{patient.housing?.replace(/_/g, ' ')}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <Clock className="w-3 h-3" />
@@ -119,9 +141,11 @@ export default function Patients() {
                 </div>
 
                 <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between">
-                  <div className="flex items-center gap-1 text-xs text-slate-400">
+                  <div className="flex items-center gap-2">
                     <span className={`w-1.5 h-1.5 rounded-full ${rc.dot}`} />
-                    {patient.status?.replace(/_/g, ' ')}
+                    <span className="text-xs text-slate-400">{patient.status?.replace(/_/g, ' ')}</span>
+                    <span className="text-[10px] text-slate-300">·</span>
+                    <span className="text-[10px] text-slate-400">{SLA[patient.riskLevel]}</span>
                   </div>
                   <ArrowRight className="w-3.5 h-3.5 text-slate-300" />
                 </div>
