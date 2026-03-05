@@ -1,22 +1,10 @@
 services:
   - type: web
-    name: goldie-frontend
-    env: node
-    buildCommand: cd frontend && npm install && npm run build
-    startCommand: cd frontend && npx serve dist -l $PORT
-    envVars:
-      - key: NODE_ENV
-        value: production
-    routes:
-      - type: rewrite
-        source: /api/*
-        destination: https://goldie-backend.onrender.com/api/*
-
-  - type: web
-    name: goldie-backend
+    name: goldie-v2-backend
     env: node
     buildCommand: cd backend && npm install
     startCommand: cd backend && npm start
+    plan: starter
     envVars:
       - key: NODE_ENV
         value: production
@@ -24,3 +12,22 @@ services:
         sync: false
       - key: PORT
         value: "3002"
+      - key: CORS_ORIGIN
+        value: "https://goldie-v2-frontend.onrender.com"
+
+  - type: web
+    name: goldie-v2-frontend
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: "https://goldie-v2-backend.onrender.com"
