@@ -1,0 +1,68 @@
+[
+  {
+    "id": "prov-001",
+    "name": "BluegrassMAT Clinic",
+    "type": "MAT Provider",
+    "address": "1801 Alexandria Dr, Lexington, KY 40504",
+    "phone": "859-555-0120",
+    "services": ["buprenorphine", "methadone", "naltrexone", "counseling"],
+    "capacity": "accepting",
+    "waitTime": "1-3 days",
+    "counties": ["Fayette", "Scott", "Jessamine"]
+  },
+  {
+    "id": "prov-002",
+    "name": "Lexington Recovery Coalition",
+    "type": "Peer Support",
+    "address": "324 E Main St, Lexington, KY 40507",
+    "phone": "859-555-0145",
+    "services": ["peer_support", "recovery_coaching", "naloxone_distribution", "case_management"],
+    "capacity": "accepting",
+    "waitTime": "Same day",
+    "counties": ["Fayette"]
+  },
+  {
+    "id": "prov-003",
+    "name": "UK HealthCare BRIGHT Program",
+    "type": "Hospital-Based SUD",
+    "address": "800 Rose St, Lexington, KY 40536",
+    "phone": "859-555-0180",
+    "services": ["buprenorphine_induction", "ed_bupe", "warm_handoff", "withdrawal_management"],
+    "capacity": "accepting",
+    "waitTime": "Emergency access",
+    "counties": ["Fayette", "Madison", "Clark"]
+  },
+  {
+    "id": "prov-004",
+    "name": "Fayette County Health Department",
+    "type": "Public Health",
+    "address": "650 Newtown Pike, Lexington, KY 40508",
+    "phone": "859-555-0200",
+    "services": ["naloxone_distribution", "hep_c_testing", "hiv_testing", "harm_reduction", "case_management"],
+    "capacity": "accepting",
+    "waitTime": "Walk-in available",
+    "counties": ["Fayette"]
+  },
+  {
+    "id": "prov-005",
+    "name": "Centerstone Kentucky",
+    "type": "Behavioral Health",
+    "address": "201 W Short St, Lexington, KY 40507",
+    "phone": "859-555-0167",
+    "services": ["outpatient_counseling", "intensive_outpatient", "psychiatric_services", "co_occurring"],
+    "capacity": "limited",
+    "waitTime": "2-3 weeks",
+    "counties": ["Fayette", "Jessamine", "Woodford"]
+  },
+  {
+    "id": "prov-006",
+    "name": "Housing Authority of Lexington",
+    "type": "Housing",
+    "address": "300 W Loudon Ave, Lexington, KY 40508",
+    "phone": "859-555-0188",
+    "services": ["emergency_shelter", "transitional_housing", "permanent_supportive_housing", "housing_navigation"],
+    "capacity": "limited",
+    "waitTime": "30-45 days",
+    "counties": ["Fayette"]
+  }
+]

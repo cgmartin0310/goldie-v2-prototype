@@ -1,0 +1,40 @@
+{
+  "patient-001": {
+    "rubricScore": 78,
+    "rubricLevel": "high",
+    "aiScore": 82,
+    "aiLevel": "critical",
+    "confidence": 0.91,
+    "combinedScore": 80,
+    "riskVector": {
+      "overdoseRisk": 82,
+      "relapseRisk": 75,
+      "treatmentDropout": 60,
+      "housingCrisis": 45,
+      "medicalComplication": 55,
+      "crisisRisk": 48
+    },
+    "rubricFactors": [
+      { "factor": "Recent overdose (OD #4 today)", "points": 30, "maxPoints": 30, "severity": "critical" },
+      { "factor": "Lifetime OD history (4 total)", "points": 20, "maxPoints": 20, "severity": "high" },
+      { "factor": "Fentanyl + benzodiazepine combination (5x OD risk)", "points": 20, "maxPoints": 20, "severity": "critical" },
+      { "factor": "Released from custody 14 days ago", "points": 15, "maxPoints": 15, "severity": "high" },
+      { "factor": "No naloxone access in past 30 days", "points": 10, "maxPoints": 10, "severity": "high" },
+      { "factor": "Housing instability (emergency shelter)", "points": 5, "maxPoints": 5, "severity": "moderate" },
+      { "factor": "Currently in emergency shelter (mitigating)", "points": -12, "maxPoints": 0, "severity": "mitigating" },
+      { "factor": "Prior MAT engagement (mitigating)", "points": -10, "maxPoints": 0, "severity": "mitigating" }
+    ],
+    "aiInsights": [
+      "OD frequency accelerating: 10-month gap between OD1 and OD2, 5.5 months between OD2 and OD3, 4.5 months between OD3 and OD4",
+      "Post-incarceration release pattern: 2 of 4 ODs occurred within 2 weeks of jail release",
+      "Poly-substance pattern with fentanyl + benzos significantly increases naloxone effectiveness challenges",
+      "Hep C progression without treatment increases medical complication risk",
+      "MAT discontinuation pattern: 2 starts, 2 stops — indicating engagement barriers"
+    ],
+    "redFlags": [
+      { "severity": "critical", "flag": "Opioid + Benzodiazepine combination (5x increased OD risk per CDC)", "action": "Immediate naloxone kit + benzo tapering plan", "deadline": "Today" },
+      { "severity": "critical", "flag": "4th overdose — accelerating frequency", "action": "ED DART protocol + warm handoff to MAT", "deadline": "Today" },
+      { "severity": "high", "flag": "Post-incarceration release + no MAT bridge", "action": "Buprenorphine induction in ED", "deadline": "Today" }
+    ]
+  }
+}
