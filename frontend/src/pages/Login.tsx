@@ -33,9 +33,7 @@ export default function Login() {
         style={{ background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)' }}>
         
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: '#D4A843' }}>
-            <Waves className="w-6 h-6 text-[#1a1a2e]" />
-          </div>
+          <img src="/logo-goldie.svg" alt="Goldie Health" className="h-10 w-auto" />
           <span className="text-white text-2xl font-bold">Goldie</span>
         </div>
 
@@ -78,9 +76,7 @@ export default function Login() {
         <div className="w-full max-w-sm">
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: '#D4A843' }}>
-              <Waves className="w-6 h-6 text-[#1a1a2e]" />
-            </div>
+            <img src="/logo-goldie.svg" alt="Goldie Health" className="h-10 w-auto" />
             <span className="text-white text-2xl font-bold">Goldie</span>
           </div>
 
