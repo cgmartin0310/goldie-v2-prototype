@@ -33,12 +33,8 @@ export default function Layout({ children }: LayoutProps) {
       <aside className="w-60 flex-shrink-0 flex flex-col" style={{ background: '#1a1a2e' }}>
         {/* Logo */}
         <div className="p-5 border-b border-white/10">
-          <div className="flex items-center gap-3">
-            <img src="/logo-goldie.svg" alt="Goldie" className="h-8 w-auto" />
-            <div>
-              <div className="font-bold text-white text-lg leading-none">Goldie</div>
-              <div className="text-xs text-white/40 mt-0.5">Care Intelligence</div>
-            </div>
+          <div className="flex items-center">
+            <img src="/goldie-logo-full.png" alt="Goldie Health" className="h-9 w-auto" />
           </div>
         </div>
 

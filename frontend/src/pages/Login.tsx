@@ -32,9 +32,8 @@ export default function Login() {
       <div className="hidden lg:flex flex-col justify-between w-1/2 p-12"
         style={{ background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)' }}>
         
-        <div className="flex items-center gap-3">
-          <img src="/logo-goldie.svg" alt="Goldie Health" className="h-10 w-auto" />
-          <span className="text-white text-2xl font-bold">Goldie</span>
+        <div className="flex items-center">
+          <img src="/goldie-logo-full.png" alt="Goldie Health" className="h-12 w-auto" />
         </div>
 
         <div>
@@ -75,9 +74,8 @@ export default function Login() {
       <div className="flex-1 flex items-center justify-center p-8">
         <div className="w-full max-w-sm">
           {/* Mobile logo */}
-          <div className="lg:hidden flex items-center gap-3 mb-8">
-            <img src="/logo-goldie.svg" alt="Goldie Health" className="h-10 w-auto" />
-            <span className="text-white text-2xl font-bold">Goldie</span>
+          <div className="lg:hidden flex items-center mb-8">
+            <img src="/goldie-logo-full.png" alt="Goldie Health" className="h-10 w-auto" />
           </div>
 
           <div className="rounded-2xl p-8" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
