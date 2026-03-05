@@ -1,0 +1,66 @@
+Provisional Patent Application — DRAFT
+Systems and Methods for Managing Patient Carestreams Using Dynamically Generated Health Timelines and Risk-Controlled Closed-Loop Planning
+INVENTORS AND ASSIGNEE
+Inventors:service plan
+Chris Martin, Chief Executive Officer
+Michael Plotkin, Chief Technology Officer
+Assignee (Patent Owner):
+Goldie Health, Inc.
+ABSTRACT
+A healthcare management system maintains a patient-specific, append-only event stream (HEAP) comprising timed healthcare events constructed using complex event processing from transformed and aggregated EHRs coming from multiple sources. The system uses HEAP events to derive the patient’s multi-morbidity by arranging events in two dimensions: time and [health] domain. With time dimension, for a given period of time, the system produces a domain specific time-ordered set of events called Patient Health Timeline (PHT). With domain dimension, for a given group of domains, the system produces time-specific set of events which represent the patient’s health state across specified domains at a given time, such group of events is called Patient Health State (PHS).
+A group of PHTs created using some search criteria defines a 2-dimensional matrix of HEAP events across both time and domain dimensions. Such a group is called Carestream.
+Multiple Carestreams are generated dynamically for patient’s conditions and used for cross-domain and cross-time longitudinal analysis, and computing a multi-dimensional risk vector from PHT correlations and PHS projections into the future.
+The assignment of health services and execution of resulting cases are managed based on the risk vector. Case outcomes are captured as case EHRs, and sent to HEAP, forming a closed-loop control system that supports deterministic replay, auditability, and standards-compliant interoperability.
+CROSS-REFERENCE TO RELATED APPLICATIONS
+Reserved for provisional or priority claims.
+FIELD OF THE INVENTION
+The present disclosure relates generally to computerized healthcare management systems, and more particularly to systems and methods for maintaining patient-specific health event streams, dynamically generating longitudinal health timelines from the event streams, deriving patient health states at various points in time, constructing multi-dimensional risk vectors by projecting these states into the future, and using these risk vectors to provide automated service planning and execution in a closed-loop manner.
+BACKGROUND
+Healthcare delivery systems increasingly rely on electronic health records (EHRs) to store patient information and support clinical and administrative workflows. Conventional EHR systems typically function as mutable data repositories in which patient data is directly entered, updated, and overwritten by users or automated processes. Such systems are typically document-centric, fragmented across providers, and poorly suited for longitudinal analysis across clinical, behavioral, social, and operational domains.
+In parallel, care management and social care programs increasingly generate execution-level data through the delivery of services, interventions, and programs to patients. These execution events are often recorded as logs, notes, or reports, but are rarely integrated into an authoritative patient health record in a structured and analyzable manner.
+Such systems suffer from several technical limitations, including:
+Loss of historical causality, wherein the sequence of events leading to a given EHR state cannot be deterministically reconstructed;
+Tight coupling between raw events and derived conclusions, resulting in inconsistent or non-reproducible patient state;
+Inability to integrate historical EHR data with ongoing care execution data in a unified record;
+Lack of flexible, cross-domain longitudinal views for analysis without duplicating or rewriting stored data;
+Inability to safely automate planning and execution, due to lack of formal risk modeling and provenance; and
+Limited interoperability, wherein internal decision logic is either exposed or incompatible with standards-based exchange formats.
+Existing approaches do not provide a mechanism by which an EHR state may be deterministically derived from a patient-specific event history, nor do they provide dynamically generated longitudinal timelines for cross-domain risk analysis, nor a closed-loop control framework in which planning and execution are governed by explicitly modeled, multi-dimensional risk.
+Accordingly, there exists a need for systems and methods that address these deficiencies.
+SUMMARY OF THE INVENTION
+The present disclosure provides systems, methods, and non-transitory computer-readable media for managing healthcare workflows using an event-sourced architecture in which:
+Patient healthcare events from multiple sources, including electronic health records, provider case execution systems, and social services are transformed and aggregated using Complex Event Processing (CEP) into discrete, timestamped events and stored using unified format in a patient-specific event repository. The subsystem that performs this process is known as Health Event Aggregation & Processing or HEAP subsystem.
+Each event in HEAP includes: an event type (e.g., diagnosis, lab result, behavior, procedure, social determinant of health item), associated data and documents.
+HEAP events are immutable once stored.
+HEAP events can be grouped in two ways:
+By close proximity to a specific date. Such a group is known as a Patient Health State (PHS), and it reflects the patient’s health state at that time; there could be two types of PHSs: full and partial. A full PHS includes all known patient health events that occurred in the proximity of a specific date. A partial PHS includes a subset of the full PHS list of events.
+By type over a period of time. Such a group is known as a Patient Health Timeline (PHT), and it shows the progression of activities and results in a specific health domain over the specified period of time.
+Any number of PHTs can be dynamically generated by querying subsets of HEAP events and ordering them by time. The result is a Carestream, which is essentially a 2-dimensional matrix with one dimension being type, and another dimension – time. If we visualize the time dimension to be vertical, and type dimension horizontal, we can say that a horizontal slice is a PHS, and therefore a Carestream consists of patient states (full or partial) on the timeline.
+Carestreams can be created for many purposes: specific disease, specific medication use, one or more specific procedures or tests, a subset of conditions, vitals, biomarkers etc.
+One or more carestreams can be generated at once and used jointly in a time-cross-domain longitudinal analysis to show Patient Health Timelines, their progression and correlations, going from one Patient Health State to the next.
+The analysis of a group of carestreams can produce Patient Health State  projections into the future and, as a result, support the generation of multi-dimensional Health Risk Vectors (HRVs).
+Carestreams and HRVs based on them can be used to select proper healthcare services and enable the generation of a Service Plan for the patient, and do it with the high degree of accuracy.
+Services in the Service Plan are of a generic nature. To be applied to the patient, they must be mapped to Provider Programs – actual service implementations. The mapping is done via negotiation and agreement by provider to accept the patient for a program. Service plan where services are all mapped to specific programs, becomes a Care Plan.
+Programs in the Care Plan are performed via Cases. When a case is executed, its activities — along with linked data and documents — are captured as Case events, and sent to HEAP, which processes Case events using complex event processing logic, produces unified format HEAP events and stores them, thereby forming a closed-loop control system.
+Importantly, the disclosed system separates what happened (events) from what is believed (Patient Health States), and further separates both from what actions are taken (planning and execution), enabling deterministic replay, auditability, and controlled automation. Carestreams provide a flexible, dynamically generated analytical layer that does not duplicate or rewrite stored event data.
+BRIEF DESCRIPTION OF THE DRAWINGS
+FIG. 1 is a block diagram illustrating the overall system architecture of the event-sourced healthcare management system according to an embodiment of the present invention.
+FIG. 2 is a block diagram illustrating the process of carestream generation from HEAP events according to an embodiment of the present invention.
+FIG. 3 is a block diagram illustrating health risk vector generation process according to an embodiment of the present invention.
+DETAILED DESCRIPTION OF THE PREFERRED EMBODIMENTS
+Definitions
+For purposes of this disclosure, the following terms shall have the meanings set forth below:
+Electronic Health Record (EHR) is a generic, industry-standard term for all sorts of health records, produced, stored and transmitted electronically. Here the term is used to mean records, produced and sent into the system by external healthcare organizations – providers.
+Health Event Aggregation and Processing (HEAP) refers to the entity that collects patient electronic health records (EHRs) from different sources, then processes them using complex event processing and stores the results in one unified system as timed health events with linked data and documents, serving as the single authoritative event stream for all care activity associated with a given patient.
+HEAP Event refers to an atomic unit of the patient health information representing a discrete healthcare activity, including associated data, timestamp, provenance, and optional linked documents.
+HEAP Stream refers to all HEAP events associated with a specific patient. Therefore, HEAP can be viewed as a collection of HEAP Streams.
+Complex Event Processing (CEP) refers to processing logic applied to EHRs, to produce aggregated, derived, or transformed HEAP Events.
+Patient Health Timeline (PHT) refers to a dynamically generated, time-ordered sequence of HEAP Events selected from the HEAP according to specified query criteria. A PHT shows the progression of activities and results in a specific health domain over a specified period of time. Patient Health Timelines are not stored as static records but are generated on demand.
+Patient Health State (PHS) refers to a dynamically generated set of HEAP Events selected from the HEAP Stream according to specified query criteria and proximity to a specific calendar date. A PHS reflects the patient’s health state at a given point in time. Patient Health States are not stored as static records but are generated on demand.
+Carestream refers to a set of Patient Health Timelines where same (or close) time events are essentially Patient Health States and so a Carestream can be viewed as a time-ordered sequence of Patient Health States and used for analysis, health state projections and health risk estimation. Multiple carestreams can be generated for a given patient at any time from patient HEAP events.
+Health Risk Vector (HRV) is a multi-dimensional risk structure computed from one or more dynamically generated carestreams.
+Service Plan is a specification of healthcare services to be provided to a patient. The whole Service Plan or a portion of it can be created by a healthcare professional or generated by the system using HRVs.
+Provider is a healthcare organization which provides healthcare services to patients.
+Program is a provider-specific implementation of a healthcare service at a specific location and provider-set price.
+Care Plan is a Service Plan mapped to Programs. More precisely, each individual service is mapped to a specific Program from a specific Provider.
+Case is a one time execution of a specific Program from a specific Provider for a specific patient. The results of a c

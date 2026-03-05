@@ -1,0 +1,63 @@
+PROVISIONAL PATENT APPLICATION
+United States Patent and Trademark Office
+TITLE OF INVENTION
+Machine Learning System for Healthcare Risk Prediction Using Acute Care Records with Adaptive Dual-Track Scoring and Dynamic Data Collection
+INVENTORS
+Chris Martin
+Michael Plotkin
+ASSIGNEE
+Goldie Health, Inc.
+Filing Date: ____________________
+Application Number: ____________________
+ABSTRACT
+A computer-implemented system and method for predicting patient risk of future acute healthcare events using a multi-stage adaptive approach that combines established clinical scoring rubrics with machine learning models trained on large-scale acute care records. The system employs a novel four-part methodology comprising: (1) application of condition-specific clinical rubrics to generate transparent baseline risk scores; (2) augmentation with artificial intelligence pattern recognition trained on historical acute care records, including but not limited to emergency medical services (EMS) and emergency department (ED) records, to identify risk patterns and fill data gaps; (3) threshold-triggered generation of dynamic questionnaires to collect additional patient information when risk indicators exceed configurable thresholds; and (4) continuous dual-track updating of both clinical rubric weights and machine learning model parameters based on observed patient outcomes. The system operates on real-time or near real-time clinical data from the point of first contact through acute care encounters, enabling intervention at moments of highest patient receptivity rather than weeks after crisis events when claims data becomes available.
+CROSS-REFERENCE TO RELATED APPLICATIONS
+This application claims the benefit of priority and is a provisional application filed pursuant to 35 U.S.C. § 111(b).
+FIELD OF THE INVENTION
+The present invention relates generally to healthcare informatics and predictive analytics, and more specifically to systems and methods for real-time or near real-time patient risk stratification using acute care records and adaptive machine learning algorithms.
+BACKGROUND OF THE INVENTION
+Technical Field
+Healthcare systems worldwide face significant challenges in identifying and intervening with high-risk patients before acute medical events occur. Current risk prediction methodologies rely predominantly on retrospective data sources that introduce substantial delays between patient crisis events and system identification of risk.
+Limitations of Existing Approaches
+Conventional healthcare risk prediction systems predominantly rely on two primary data sources:
+Claims Data: Billing records submitted to insurance companies that are delayed days or in some cases weeks from the date of service and lack real-time clinical context.
+Administrative Data: Demographic information and utilization patterns derived from administrative systems that lack real-time clinical context.
+These existing approaches result in several critical deficiencies:
+Delayed Intervention: Patients are identified weeks or months after crisis events, missing the critical window of opportunity when patients are most receptive to intervention.
+Incomplete Risk Profiles: Missing acute care context including field observations, vital signs, and emergency interventions administered prior to or during hospital encounters.
+Data Silos: Emergency medical services data is captured in a distinct format (NEMSIS) that differs from hospital electronic health record standards, creating technical barriers that prevent integration with other healthcare data sources.
+Static Modeling: Existing systems employ models that do not adapt continuously to new patient patterns, requiring periodic manual retraining and failing to incorporate real-time outcome feedback.
+Unmet Need
+There exists a significant unmet need in the healthcare industry for a system that combines real-time or near real-time acute care data with adaptive machine learning to predict and prevent future acute care events. The present invention addresses this need by providing a novel four-part methodology that operates on real-time or near real-time clinical data, employs dual scoring approaches, dynamically collects additional information when needed, and continuously improves both scoring mechanisms based on observed outcomes.
+SUMMARY OF THE INVENTION
+The present invention provides a computer-implemented system and method for predicting patient risk of acute healthcare events that addresses the limitations of existing approaches through a novel four-part methodology.
+In accordance with one aspect of the invention, a computer-implemented method for predicting patient risk of acute healthcare events comprises: receiving real-time or near real-time patient data from acute care systems including but not limited to emergency medical services electronic health records and emergency department systems; applying condition-specific clinical scoring rubrics to generate a first risk score based on established clinical guidelines; applying a machine learning model trained on historical acute care records with known outcomes to generate a second risk score; when either the first risk score or the second risk score exceeds a configurable threshold, generating a condition-specific dynamic questionnaire to collect additional patient information; incorporating questionnaire responses to refine risk assessment; and continuously updating both the clinical rubric weights and the machine learning model parameters based on observed patient outcomes.
+In accordance with another aspect of the invention, a healthcare risk prediction system comprises: a data ingestion module configured to receive real-time or near real-time data from acute care systems including but not limited to emergency medical services electronic health records and emergency department admission-discharge-transfer feeds; a rubric scoring engine configured to apply condition-specific clinical scoring tools to generate transparent baseline risk scores; a machine learning engine trained on historical acute care records to identify patients whose data patterns match historical patients who experienced adverse outcomes; a dynamic questionnaire generator configured to generate condition-specific questionnaires when risk thresholds are exceeded; and a continuous learning module configured to update both the rubric scoring weights and the machine learning model based on observed patient outcomes.
+DETAILED DESCRIPTION OF THE INVENTION
+System Overview
+The present invention, referred to herein as the DART (Detection, Activation, Risk-stratified Treatment) system, implements a four-part methodology for healthcare risk prediction that operates on real-time or near real-time clinical data from the point of first contact through acute care encounters.
+Part 1: Clinical Rubric Scoring Engine
+The first component of the system applies established, condition-specific clinical scoring tools to incoming patient data. The rubric scoring engine is configured to process patient demographics, clinical history, and current encounter data to generate condition-specific risk scores on a normalized scale.
+The clinical rubrics incorporated in the system include, but are not limited to:
+Condition
+Clinical Rubric
+Validated Accuracy
+Opioid Use Disorder
+SAMHSA/ASAM-based rubrics
+86%
+Heart Failure
+MEESSI-AHF, GWTG-HF
+84%
+COPD Exacerbation
+ACCEPT 2.0
+90%
+Diabetes Complications
+DISCO risk scores
+80%
+Falls (Elderly)
+STRATIFY, Morse Fall Scale
+85%
+Mental Health Crisis
+interRAI ESP
+80%
+The rubric scoring engine produces transparent, clinically-defensible baseline scores based on known risk factors. For opioid use disorder, the system implements a 100-point clinical rubric incorporating weighted risk factors including: recent overdose within thirty days (30 points), lifetime overdose history (20 points), high-risk substance use patterns (20 points), recent incarceration or treatment release (15 points), naloxone access (10 points), and housing stability (5 
