@@ -155,6 +155,7 @@ export default function Dashboard() {
               <div className="flex items-center gap-3 text-xs text-slate-400">
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#D4A843]" />Your County</span>
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-slate-300" />Network</span>
+                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-slate-500/40" />MOUD Initiated</span>
               </div>
             </div>
           </CardHeader>
@@ -170,27 +171,31 @@ export default function Dashboard() {
                       {isMe && <span className="w-1.5 h-1.5 rounded-full bg-[#D4A843] flex-shrink-0" />}
                       {county.name}
                     </div>
-                    <div className="flex-1 h-6 bg-slate-100 rounded-full overflow-hidden relative">
+                    <div className="flex-1 h-7 bg-slate-100 rounded-full overflow-hidden relative">
+                      {/* Full bar = patients detected */}
                       <div
-                        className="h-full rounded-full transition-all duration-700 flex items-center"
+                        className="absolute inset-y-0 left-0 rounded-full transition-all duration-700"
                         style={{
                           width: `${pct}%`,
                           background: isMe ? 'linear-gradient(90deg, #D4A843, #e8c06a)' : '#cbd5e1',
                         }}
-                      >
-                        {pct > 25 && (
-                          <span className={`ml-auto mr-2.5 text-[10px] font-semibold ${isMe ? 'text-white' : 'text-slate-600'}`}>
-                            {county.moudRate}% MOUD
-                          </span>
-                        )}
-                      </div>
-                      {pct <= 25 && (
-                        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-semibold text-slate-500">
-                          {county.moudRate}% MOUD
+                      />
+                      {/* MOUD initiation overlay — darker segment inside the bar */}
+                      <div
+                        className="absolute inset-y-0 left-0 rounded-full transition-all duration-700"
+                        style={{
+                          width: `${(county.moudRate / 100) * pct}%`,
+                          background: isMe ? 'rgba(0,0,0,0.18)' : 'rgba(0,0,0,0.12)',
+                        }}
+                      />
+                      {/* Label inside bar */}
+                      <div className="absolute inset-0 flex items-center px-2.5">
+                        <span className={`text-[10px] font-bold ${isMe ? 'text-white' : 'text-slate-600'}`}>
+                          {county.moudRate}% initiated
                         </span>
-                      )}
+                      </div>
                     </div>
-                    <div className={`text-xs font-bold w-10 text-right ${isMe ? 'text-[#D4A843]' : 'text-slate-500'}`}>
+                    <div className={`text-xs font-bold w-10 text-right flex-shrink-0 ${isMe ? 'text-[#D4A843]' : 'text-slate-500'}`}>
                       {county.count}
                     </div>
                   </div>
