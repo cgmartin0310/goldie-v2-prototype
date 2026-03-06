@@ -15,7 +15,6 @@ const navItems = [
   { to: '/admin/counties', label: 'Counties', icon: MapPin },
   { to: '/admin/revenue', label: 'Revenue', icon: DollarSign },
   { to: '/admin/metrics', label: 'Platform Metrics', icon: BarChart3 },
-  { to: '/admin/expansion', label: 'Expansion', icon: TrendingUp },
 ];
 
 export default function AdminLayout({ children }: LayoutProps) {

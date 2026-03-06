@@ -29,7 +29,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminCounties from './pages/admin/AdminCounties';
 import AdminRevenue from './pages/admin/AdminRevenue';
 import AdminMetrics from './pages/admin/AdminMetrics';
-import AdminExpansion from './pages/admin/AdminExpansion';
+// AdminExpansion removed — too sales-pitch
 
 function getRole(): string | null {
   return localStorage.getItem('goldie_role');
@@ -117,7 +117,7 @@ export default function App() {
         <Route path="/admin/counties" element={<AdminRoute><AdminCounties /></AdminRoute>} />
         <Route path="/admin/revenue" element={<AdminRoute><AdminRevenue /></AdminRoute>} />
         <Route path="/admin/metrics" element={<AdminRoute><AdminMetrics /></AdminRoute>} />
-        <Route path="/admin/expansion" element={<AdminRoute><AdminExpansion /></AdminRoute>} />
+
 
         {/* Catch-all */}
         <Route path="*" element={<DefaultRedirect />} />
