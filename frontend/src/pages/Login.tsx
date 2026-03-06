@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Lock, AlertCircle, Building2, Heart, Shield } from 'lucide-react';
+import { Lock, AlertCircle, Building2, Heart, Shield, LayoutDashboard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const CREDENTIALS: Record<string, { role: string; redirect: string }> = {
@@ -8,12 +8,14 @@ const CREDENTIALS: Record<string, { role: string; redirect: string }> = {
   'county@goldie.health':  { role: 'county',    redirect: '/dashboard' },
   'provider@goldie.health':{ role: 'provider',  redirect: '/provider/dashboard' },
   'payer@goldie.health':   { role: 'payer',     redirect: '/payer/dashboard' },
+  'admin@goldie.health':   { role: 'admin',     redirect: '/admin/dashboard' },
 };
 
 const PORTAL_LABELS: Record<string, { name: string; sub: string; letter: string }> = {
   county:   { name: 'Catawba County Health Department', sub: 'County Public Health Portal', letter: 'C' },
   provider: { name: 'Alliance Health — Provider Network', sub: 'Treatment Provider Portal', letter: 'P' },
   payer:    { name: 'Blue Cross NC — Payer Analytics', sub: 'Insurance & Payer Portal', letter: 'B' },
+  admin:    { name: 'Goldie HQ — Platform Administration', sub: 'Goldie HQ Portal', letter: 'G' },
 };
 
 export default function Login() {
@@ -92,6 +94,12 @@ export default function Login() {
                 title: 'Insurance & Payers',
                 desc: 'Measurable cost reduction through coordinated intervention',
                 color: '#22c55e',
+              },
+              {
+                icon: LayoutDashboard,
+                title: 'Goldie HQ',
+                desc: 'Full platform view — revenue, pipeline, and network health',
+                color: '#D4A843',
               },
             ].map(item => {
               const Icon = item.icon;
