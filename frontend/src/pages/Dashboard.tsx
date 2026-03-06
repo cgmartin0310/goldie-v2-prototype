@@ -51,15 +51,15 @@ const KPI_CARDS = [
 // Western/Foothills cluster + Carteret on coast
 // Positions mapped to NC outline: west (x~5-15), foothills (x~15-30), piedmont (x~30-45), coast (x~80+)
 const COUNTY_ZONES = [
-  { name: 'Catawba',   x: 22, y: 42, intensity: 0.88, count: 312,  isMyCounty: true  },
-  { name: 'Burke',     x: 15, y: 40, intensity: 0.72, count: 241,  isMyCounty: false },
-  { name: 'Caldwell',  x: 18, y: 33, intensity: 0.65, count: 198,  isMyCounty: false },
-  { name: 'Alexander', x: 24, y: 34, intensity: 0.58, count: 174,  isMyCounty: false },
-  { name: 'Rowan',     x: 32, y: 44, intensity: 0.54, count: 161,  isMyCounty: false },
-  { name: 'Cleveland', x: 24, y: 54, intensity: 0.48, count: 143,  isMyCounty: false },
-  { name: 'Surry',     x: 26, y: 24, intensity: 0.42, count: 127,  isMyCounty: false },
-  { name: 'Jackson',   x: 7,  y: 52, intensity: 0.35, count: 104,  isMyCounty: false },
-  { name: 'Carteret',  x: 82, y: 52, intensity: 0.28, count:  87,  isMyCounty: false },
+  { name: 'Catawba',   x: 22, y: 42, intensity: 0.88, count: 312,  isMyCounty: true,  moudRate: 21.4 },
+  { name: 'Burke',     x: 15, y: 40, intensity: 0.72, count: 241,  isMyCounty: false, moudRate: 18.7 },
+  { name: 'Caldwell',  x: 18, y: 33, intensity: 0.65, count: 198,  isMyCounty: false, moudRate: 22.1 },
+  { name: 'Alexander', x: 24, y: 34, intensity: 0.58, count: 174,  isMyCounty: false, moudRate: 16.3 },
+  { name: 'Rowan',     x: 32, y: 44, intensity: 0.54, count: 161,  isMyCounty: false, moudRate: 19.8 },
+  { name: 'Cleveland', x: 24, y: 54, intensity: 0.48, count: 143,  isMyCounty: false, moudRate: 14.9 },
+  { name: 'Surry',     x: 26, y: 24, intensity: 0.42, count: 127,  isMyCounty: false, moudRate: 20.5 },
+  { name: 'Jackson',   x: 7,  y: 52, intensity: 0.35, count: 104,  isMyCounty: false, moudRate: 17.2 },
+  { name: 'Carteret',  x: 82, y: 52, intensity: 0.28, count:  87,  isMyCounty: false, moudRate: 23.6 },
 ];
 
 function CounterNumber({ target, suffix = '' }: { target: number | string; suffix?: string }) {
@@ -170,14 +170,25 @@ export default function Dashboard() {
                       {isMe && <span className="w-1.5 h-1.5 rounded-full bg-[#D4A843] flex-shrink-0" />}
                       {county.name}
                     </div>
-                    <div className="flex-1 h-5 bg-slate-100 rounded-full overflow-hidden">
+                    <div className="flex-1 h-6 bg-slate-100 rounded-full overflow-hidden relative">
                       <div
-                        className="h-full rounded-full transition-all duration-700"
+                        className="h-full rounded-full transition-all duration-700 flex items-center"
                         style={{
                           width: `${pct}%`,
                           background: isMe ? 'linear-gradient(90deg, #D4A843, #e8c06a)' : '#cbd5e1',
                         }}
-                      />
+                      >
+                        {pct > 25 && (
+                          <span className={`ml-auto mr-2.5 text-[10px] font-semibold ${isMe ? 'text-white' : 'text-slate-600'}`}>
+                            {county.moudRate}% MOUD
+                          </span>
+                        )}
+                      </div>
+                      {pct <= 25 && (
+                        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-semibold text-slate-500">
+                          {county.moudRate}% MOUD
+                        </span>
+                      )}
                     </div>
                     <div className={`text-xs font-bold w-10 text-right ${isMe ? 'text-[#D4A843]' : 'text-slate-500'}`}>
                       {county.count}

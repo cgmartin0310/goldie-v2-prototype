@@ -32,7 +32,7 @@ export default function PayerLayout({ children }: LayoutProps) {
         {/* Logo */}
         <div className="p-5 border-b border-white/10">
           <div className="flex items-center">
-            <img src="/goldie-logo-full.png" alt="Goldie Health" className="h-9 w-auto" />
+            <img src="/goldie-logo-full.svg" alt="Goldie Health" className="h-9 w-auto" />
           </div>
         </div>
 
