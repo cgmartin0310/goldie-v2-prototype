@@ -1,37 +1,23 @@
 import React from 'react';
-import { DollarSign, TrendingUp, Zap } from 'lucide-react';
+import { DollarSign, TrendingUp } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, Legend, Cell,
+  ResponsiveContainer, Legend,
 } from 'recharts';
 
+// Realistic varied revenue per county (annualized $K)
+// All 9 have municipal. ~5 have referral revenue. 2 have early insurance revenue.
 const COUNTY_REVENUE = [
-  { county: 'Alexander', muni: 0.1, treatment: 1.0, payer: 14.9 },
-  { county: 'Burke',     muni: 0.1, treatment: 1.0, payer: 14.9 },
-  { county: 'Caldwell',  muni: 0.1, treatment: 1.0, payer: 14.9 },
-  { county: 'Carteret',  muni: 0.1, treatment: 1.0, payer: 14.9 },
-  { county: 'Catawba',   muni: 0.1, treatment: 1.0, payer: 14.9 },
-  { county: 'Cleveland', muni: 0.1, treatment: 1.0, payer: 14.9 },
-  { county: 'Jackson',   muni: 0.1, treatment: 1.0, payer: 14.9 },
-  { county: 'Rowan',     muni: 0.1, treatment: 1.0, payer: 14.9 },
-  { county: 'Surry',     muni: 0.1, treatment: 1.0, payer: 14.9 },
-];
-
-const WATERFALL = [
-  { name: 'Start', value: 0, cumulative: 0, type: 'start' },
-  { name: 'Alexander', value: 16.0, cumulative: 16.0, type: 'county' },
-  { name: 'Burke',     value: 16.0, cumulative: 32.0, type: 'county' },
-  { name: 'Caldwell',  value: 16.0, cumulative: 48.0, type: 'county' },
-  { name: 'Carteret',  value: 16.0, cumulative: 64.0, type: 'county' },
-  { name: 'Catawba',   value: 16.0, cumulative: 80.0, type: 'county' },
-  { name: 'Cleveland', value: 16.0, cumulative: 96.0, type: 'county' },
-  { name: 'Jackson',   value: 16.0, cumulative: 112.0, type: 'county' },
-  { name: 'Rowan',     value: 16.0, cumulative: 128.0, type: 'county' },
-  { name: 'Surry',     value: 16.0, cumulative: 144.0, type: 'county' },
-  { name: 'OUD Total', value: 0, cumulative: 144.0, type: 'subtotal' },
-  { name: '+ All Conditions', value: 48.0, cumulative: 192.0, type: 'expansion' },
-  { name: 'Total $192M', value: 0, cumulative: 192.0, type: 'total' },
+  { county: 'Catawba',   muni: 120, referral: 348, payer: 186 },
+  { county: 'Rowan',     muni: 110, referral: 275, payer: 0 },
+  { county: 'Burke',     muni: 100, referral: 180, payer: 0 },
+  { county: 'Caldwell',  muni: 90,  referral: 82,  payer: 54 },
+  { county: 'Cleveland', muni: 95,  referral: 125, payer: 0 },
+  { county: 'Surry',     muni: 85,  referral: 0,   payer: 0 },
+  { county: 'Alexander', muni: 80,  referral: 42,  payer: 0 },
+  { county: 'Carteret',  muni: 78,  referral: 0,   payer: 0 },
+  { county: 'Jackson',   muni: 75,  referral: 0,   payer: 0 },
 ];
 
 const TOOLTIP_STYLE = {
@@ -42,165 +28,151 @@ const TOOLTIP_STYLE = {
   fontSize: 12,
 };
 
-const STREAMS = [
-  {
-    title: 'Municipalities',
-    value: '$100K/county',
-    total: '$900K',
-    color: '#22c55e',
-    comparable: 'Like Unite Us — but upstream at the point of crisis',
-    desc: 'Annual contract per county for DART-powered crisis detection and public health intelligence.',
-    icon: '🏛️',
-  },
-  {
-    title: 'Treatment Referrals',
-    value: '$1M/county',
-    total: '$9M',
-    color: '#3b82f6',
-    comparable: 'Like Zocdoc — but at the moment of highest motivation',
-    desc: 'Per-referral fees and success bonuses from treatment providers receiving qualified, motivated patients.',
-    icon: '🏥',
-  },
-  {
-    title: 'Insurance / Payer',
-    value: '$14.9M/county',
-    total: '$134.1M',
-    color: '#D4A843',
-    comparable: 'Like Health Catalyst — but controlling the entire care network',
-    desc: 'Value-based contracts tied to documented cost avoidance: $47K → $12.8K per member per year.',
-    icon: '🛡️',
-  },
-];
-
-const UNIT_ECONOMICS = [
-  { label: 'Customer Acquisition Cost', value: '~$15K', sub: 'Sales + onboarding per county', color: '#3b82f6' },
-  { label: 'Lifetime Value / County', value: '$16M', sub: 'All conditions · annual', color: '#D4A843' },
-  { label: 'LTV : CAC Ratio', value: '1,067:1', sub: 'Exceptional unit economics', color: '#22c55e' },
-  { label: 'Payback Period', value: '< 1 month', sub: 'Muni contract alone covers CAC', color: '#a78bfa' },
-];
-
 export default function AdminRevenue() {
+  // Calculate totals
+  const totals = COUNTY_REVENUE.reduce(
+    (acc, c) => ({
+      muni: acc.muni + c.muni,
+      referral: acc.referral + c.referral,
+      payer: acc.payer + c.payer,
+    }),
+    { muni: 0, referral: 0, payer: 0 }
+  );
+  const grandTotal = totals.muni + totals.referral + totals.payer;
+  const countiesWithReferrals = COUNTY_REVENUE.filter(c => c.referral > 0).length;
+  const countiesWithPayer = COUNTY_REVENUE.filter(c => c.payer > 0).length;
+
   return (
     <div className="p-6 max-w-screen-xl">
       {/* Header */}
       <div className="mb-6">
         <div className="flex items-center gap-2 mb-1">
           <DollarSign className="w-4 h-4 text-[#D4A843]" />
-          <span className="text-xs text-slate-500 font-medium uppercase tracking-wider">Revenue Intelligence</span>
+          <span className="text-xs text-slate-500 font-medium uppercase tracking-wider">Revenue</span>
         </div>
-        <h1 className="text-xl font-bold text-slate-900">Revenue Deep Dive</h1>
-        <p className="text-slate-500 text-sm mt-0.5">Three streams · 9 counties · $192M pent-up opportunity</p>
+        <h1 className="text-xl font-bold text-slate-900">Revenue Overview</h1>
+        <p className="text-slate-500 text-sm mt-0.5">Annualized revenue across 9 NC counties · 3 revenue streams</p>
       </div>
 
-      {/* Stacked bar — revenue by stream × county */}
+      {/* Summary cards */}
+      <div className="grid grid-cols-4 gap-4 mb-5">
+        <Card>
+          <CardContent className="p-5">
+            <div className="text-xs text-slate-500 mb-1">Total Annual Revenue</div>
+            <div className="text-2xl font-black text-slate-900">${(grandTotal / 1000).toFixed(1)}M</div>
+            <div className="text-[10px] text-green-600 font-medium mt-1">
+              <TrendingUp className="w-3 h-3 inline mr-0.5" />
+              +22% vs last quarter
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-5">
+            <div className="text-xs text-slate-500 mb-1">Municipal SaaS</div>
+            <div className="text-2xl font-black text-green-700">${totals.muni}K</div>
+            <div className="text-[10px] text-slate-400 mt-1">9 of 9 counties</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-5">
+            <div className="text-xs text-slate-500 mb-1">Treatment Referrals</div>
+            <div className="text-2xl font-black text-blue-700">${totals.referral}K</div>
+            <div className="text-[10px] text-slate-400 mt-1">{countiesWithReferrals} of 9 counties</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-5">
+            <div className="text-xs text-slate-500 mb-1">Insurance / Payer</div>
+            <div className="text-2xl font-black" style={{ color: '#D4A843' }}>${totals.payer}K</div>
+            <div className="text-[10px] text-slate-400 mt-1">{countiesWithPayer} of 9 counties · pilot phase</div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Stacked bar chart — revenue by stream × county */}
       <Card className="mb-5">
         <CardHeader className="pb-2">
-          <CardTitle className="text-sm">Revenue by Stream × County ($M)</CardTitle>
-          <p className="text-xs text-slate-400">Each county contributes $16M/yr across 3 revenue streams (OUD-only baseline)</p>
+          <CardTitle className="text-sm">Revenue by County ($K Annualized)</CardTitle>
+          <p className="text-xs text-slate-400">Sorted by total revenue · Municipal is baseline, referrals and insurance vary by county maturity</p>
         </CardHeader>
         <CardContent>
-          <div className="h-64">
+          <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={COUNTY_REVENUE} margin={{ top: 5, right: 20, bottom: 5, left: 5 }} barSize={32}>
+              <BarChart
+                data={COUNTY_REVENUE}
+                margin={{ top: 5, right: 20, bottom: 5, left: 5 }}
+                barSize={32}
+              >
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
                 <XAxis dataKey="county" tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} tickFormatter={v => `$${v}M`} />
-                <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v: number | undefined) => [`$${v ?? 0}M`, '']} />
+                <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} tickFormatter={v => `$${v}K`} />
+                <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v: number | undefined) => [`$${v ?? 0}K`, '']} />
                 <Legend iconType="circle" iconSize={8} formatter={v => <span style={{ fontSize: 10, color: '#64748b' }}>{v}</span>} />
-                <Bar dataKey="payer" name="Insurance/Payer" stackId="a" fill="#D4A843" radius={[0, 0, 0, 0]} />
-                <Bar dataKey="treatment" name="Treatment Referrals" stackId="a" fill="#3b82f6" />
-                <Bar dataKey="muni" name="Municipalities" stackId="a" fill="#22c55e" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="muni" name="Municipal SaaS" stackId="a" fill="#22c55e" />
+                <Bar dataKey="referral" name="Treatment Referrals" stackId="a" fill="#3b82f6" />
+                <Bar dataKey="payer" name="Insurance/Payer" stackId="a" fill="#D4A843" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </CardContent>
       </Card>
 
-      {/* Waterfall */}
-      <Card className="mb-5">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-sm">Revenue Waterfall — County-by-County Cumulative Build</CardTitle>
-          <p className="text-xs text-slate-400">Each signed county adds $16M · OUD baseline → $192M with all conditions</p>
+      {/* Revenue detail table */}
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm">County Revenue Detail</CardTitle>
+          <p className="text-xs text-slate-400">Annualized contract values by revenue stream</p>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-0 pb-0">
           <div className="overflow-x-auto">
-            <div className="flex items-end gap-1 h-48 min-w-[700px]">
-              {WATERFALL.map((item, i) => {
-                const maxVal = 192;
-                const heightPct = (item.cumulative / maxVal) * 100;
-                const color =
-                  item.type === 'start' ? '#e2e8f0' :
-                  item.type === 'total' ? '#D4A843' :
-                  item.type === 'subtotal' ? '#94a3b8' :
-                  item.type === 'expansion' ? '#a78bfa' :
-                  '#3b82f6';
-                return (
-                  <div key={i} className="flex flex-col items-center flex-1 min-w-0">
-                    <div className="text-[9px] font-bold mb-1" style={{ color }}>
-                      {item.cumulative > 0 ? `$${item.cumulative}M` : ''}
-                    </div>
-                    <div
-                      className="w-full rounded-t transition-all"
-                      style={{
-                        height: `${Math.max(heightPct, 2)}%`,
-                        background: color,
-                        minHeight: 4,
-                      }}
-                    />
-                    <div className="text-[8px] text-slate-400 mt-1 text-center leading-tight px-0.5">{item.name}</div>
-                  </div>
-                );
-              })}
-            </div>
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-slate-100">
+                  {['County', 'Municipal SaaS', 'Treatment Referrals', 'Insurance/Payer', 'Total Revenue', 'Revenue Mix'].map(h => (
+                    <th key={h} className="text-left text-[10px] font-semibold text-slate-400 uppercase tracking-wider px-5 pb-3">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {COUNTY_REVENUE.map((county, i) => {
+                  const total = county.muni + county.referral + county.payer;
+                  const muniPct = Math.round((county.muni / total) * 100);
+                  const refPct = Math.round((county.referral / total) * 100);
+                  const payPct = 100 - muniPct - refPct;
+                  return (
+                    <tr key={county.county} className={`border-b border-slate-50 hover:bg-slate-50/80 transition-colors ${i % 2 === 0 ? '' : 'bg-slate-50/30'}`}>
+                      <td className="px-5 py-3 font-semibold text-slate-800">{county.county}</td>
+                      <td className="px-5 py-3 font-medium text-green-700">${county.muni}K</td>
+                      <td className="px-5 py-3 font-medium text-blue-700">{county.referral > 0 ? `$${county.referral}K` : <span className="text-slate-300">—</span>}</td>
+                      <td className="px-5 py-3 font-medium" style={{ color: county.payer > 0 ? '#D4A843' : '#cbd5e1' }}>{county.payer > 0 ? `$${county.payer}K` : '—'}</td>
+                      <td className="px-5 py-3 font-bold text-slate-900">${total}K</td>
+                      <td className="px-5 py-3">
+                        <div className="flex h-2.5 rounded overflow-hidden w-28 gap-px">
+                          <div style={{ width: `${muniPct}%`, background: '#22c55e' }} />
+                          {refPct > 0 && <div style={{ width: `${refPct}%`, background: '#3b82f6' }} />}
+                          {payPct > 0 && county.payer > 0 && <div style={{ width: `${payPct}%`, background: '#D4A843' }} />}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+
+                {/* Totals */}
+                <tr className="border-t-2 border-slate-200" style={{ background: 'rgba(212,168,67,0.05)' }}>
+                  <td className="px-5 py-3 font-bold text-slate-900">Total (9 counties)</td>
+                  <td className="px-5 py-3 font-bold text-green-700">${totals.muni}K</td>
+                  <td className="px-5 py-3 font-bold text-blue-700">${totals.referral}K</td>
+                  <td className="px-5 py-3 font-bold" style={{ color: '#D4A843' }}>${totals.payer}K</td>
+                  <td className="px-5 py-3">
+                    <span className="text-lg font-black" style={{ color: '#D4A843' }}>${(grandTotal / 1000).toFixed(1)}M</span>
+                  </td>
+                  <td className="px-5 py-3" />
+                </tr>
+              </tbody>
+            </table>
           </div>
         </CardContent>
       </Card>
-
-      {/* Unit economics */}
-      <div className="grid grid-cols-4 gap-3 mb-5">
-        {UNIT_ECONOMICS.map(ue => (
-          <Card key={ue.label}>
-            <CardContent className="p-5">
-              <div className="flex items-center gap-2 mb-3">
-                <Zap className="w-4 h-4" style={{ color: ue.color }} />
-                <span className="text-xs text-slate-500 font-medium">{ue.label}</span>
-              </div>
-              <div className="text-2xl font-black mb-0.5" style={{ color: ue.color }}>{ue.value}</div>
-              <div className="text-xs text-slate-400">{ue.sub}</div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* Revenue stream cards */}
-      <div className="grid grid-cols-3 gap-4">
-        {STREAMS.map(s => (
-          <Card key={s.title} className="overflow-hidden">
-            <div className="h-1.5" style={{ background: s.color }} />
-            <CardContent className="p-5">
-              <div className="flex items-start justify-between mb-3">
-                <div>
-                  <span className="text-2xl">{s.icon}</span>
-                  <div className="mt-2 text-base font-bold text-slate-800">{s.title}</div>
-                  <div className="text-xs text-slate-400">{s.value} per county</div>
-                </div>
-                <div className="text-right">
-                  <div className="text-xl font-black" style={{ color: s.color }}>{s.total}</div>
-                  <div className="text-[10px] text-slate-400">9 counties</div>
-                </div>
-              </div>
-              <div className="p-3 rounded-lg mb-3" style={{ background: `${s.color}12`, border: `1px solid ${s.color}25` }}>
-                <div className="flex items-center gap-1.5 mb-0.5">
-                  <TrendingUp className="w-3 h-3" style={{ color: s.color }} />
-                  <span className="text-xs font-semibold" style={{ color: s.color }}>Comparable</span>
-                </div>
-                <div className="text-xs text-slate-600 italic">{s.comparable}</div>
-              </div>
-              <p className="text-xs text-slate-500 leading-relaxed">{s.desc}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
     </div>
   );
 }
