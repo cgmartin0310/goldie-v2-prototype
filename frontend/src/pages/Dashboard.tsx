@@ -147,101 +147,48 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-5 gap-4">
-        {/* County Map */}
+        {/* Network County Comparison */}
         <Card className="col-span-3">
-          <CardHeader className="pb-3">
+          <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-sm">OD Incident Heatmap — North Carolina</CardTitle>
+              <CardTitle className="text-sm">Patients Detected — Goldie NC Network</CardTitle>
               <div className="flex items-center gap-3 text-xs text-slate-400">
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#D4A843]" />Your County</span>
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500" />High</span>
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green-400" />Lower</span>
+                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-slate-300" />Network</span>
               </div>
             </div>
           </CardHeader>
-          <CardContent className="p-0">
-            <div className="relative h-72 mx-5 mb-5 rounded-xl overflow-hidden"
-              style={{ background: 'linear-gradient(135deg, #e8edf5 0%, #dde5f0 100%)', border: '1px solid #e2e8f0' }}>
-
-              {/* Grid lines */}
-              <svg className="absolute inset-0 w-full h-full">
-                <defs>
-                  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#cbd5e1" strokeWidth="0.5" opacity="0.5" />
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#grid)" />
-              </svg>
-
-              {/* NC state outline — simplified but recognizable shape */}
-              <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path
-                  d="M 2,28 L 8,25 L 18,22 L 30,20 L 42,19 L 55,18 L 65,20 L 75,22 L 82,26 L 88,30 L 92,33 L 95,38 L 97,42 L 96,46 L 93,43 L 91,47 L 94,52 L 92,56 L 88,54 L 86,58 L 89,62 L 86,65 L 82,60 L 78,57 L 75,55 L 70,56 L 65,58 L 58,60 L 50,62 L 42,63 L 35,63 L 28,62 L 20,62 L 14,63 L 8,65 L 3,67 L 2,60 L 2,50 L 2,40 Z"
-                  fill="white"
-                  stroke="#94a3b8"
-                  strokeWidth="0.5"
-                  fillOpacity="0.7"
-                />
-              </svg>
-
-              {/* County dots */}
-              {COUNTY_ZONES.map((county) => {
-                const color = county.isMyCounty ? '#D4A843'
-                  : county.intensity >= 0.7 ? '#ef4444'
-                  : county.intensity >= 0.5 ? '#f97316'
-                  : county.intensity >= 0.35 ? '#f59e0b'
-                  : '#22c55e';
-                const size = county.isMyCounty ? 22 : (8 + county.intensity * 16);
-
+          <CardContent className="px-5 pb-5">
+            <div className="space-y-2">
+              {COUNTY_ZONES.sort((a, b) => b.count - a.count).map((county) => {
+                const maxCount = 312;
+                const pct = (county.count / maxCount) * 100;
+                const isMe = county.isMyCounty;
                 return (
-                  <div
-                    key={county.name}
-                    className="absolute group"
-                    style={{
-                      left: `${county.x}%`,
-                      top: `${county.y}%`,
-                      transform: 'translate(-50%, -50%)',
-                      cursor: county.isMyCounty ? 'pointer' : 'default',
-                    }}
-                    onClick={() => county.isMyCounty ? navigate('/patients') : undefined}
-                  >
-                    {/* Pulse ring — own county + high intensity others */}
-                    {(county.isMyCounty || county.intensity >= 0.7) && (
-                      <div className="absolute rounded-full animate-ping opacity-25"
-                        style={{ width: size * 2, height: size * 2, background: color, top: -size/2, left: -size/2 }} />
-                    )}
-                    {/* Main dot */}
-                    <div
-                      className="rounded-full border-2 border-white shadow-lg transition-transform group-hover:scale-125"
-                      style={{ width: size, height: size, background: color, opacity: county.isMyCounty ? 1 : 0.80 }}
-                    />
-                    {/* Own county ring */}
-                    {county.isMyCounty && (
-                      <div className="absolute rounded-full border-2 border-[#D4A843]"
-                        style={{ width: size + 8, height: size + 8, top: -4, left: -4, opacity: 0.5 }} />
-                    )}
-                    {/* Tooltip */}
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-[#1a1a2e] text-white text-xs px-2 py-1.5 rounded shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                      <div className="font-semibold">{county.name} County {county.isMyCounty ? '⭐' : ''}</div>
-                      <div className="text-white/60">{county.count} patients detected</div>
-                      {county.isMyCounty && <div className="text-[#D4A843] text-[10px] mt-0.5">← Your County · Click to view</div>}
-                      {!county.isMyCounty && <div className="text-white/40 text-[10px] mt-0.5">Network county — aggregate only</div>}
-                    </div>
-                    {/* County name label */}
-                    <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-0.5 text-[9px] font-medium whitespace-nowrap ${county.isMyCounty ? 'text-[#D4A843]' : 'text-slate-600'}`}>
+                  <div key={county.name} className={`group flex items-center gap-3 rounded-lg px-3 py-2 transition-colors ${isMe ? 'bg-amber-50 border border-[#D4A843]/20' : 'hover:bg-slate-50'}`}>
+                    <div className="w-20 text-xs font-medium text-slate-700 flex items-center gap-1.5 flex-shrink-0">
+                      {isMe && <span className="w-1.5 h-1.5 rounded-full bg-[#D4A843] flex-shrink-0" />}
                       {county.name}
+                    </div>
+                    <div className="flex-1 h-5 bg-slate-100 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full transition-all duration-700"
+                        style={{
+                          width: `${pct}%`,
+                          background: isMe ? 'linear-gradient(90deg, #D4A843, #e8c06a)' : '#cbd5e1',
+                        }}
+                      />
+                    </div>
+                    <div className={`text-xs font-bold w-10 text-right ${isMe ? 'text-[#D4A843]' : 'text-slate-500'}`}>
+                      {county.count}
                     </div>
                   </div>
                 );
               })}
-
-              {/* Legend */}
-              <div className="absolute bottom-3 left-3 bg-white/90 rounded-lg px-3 py-2 shadow-sm">
-                <div className="text-[10px] text-slate-500 font-medium mb-1">9 COUNTIES IN GOLDIE NC NETWORK</div>
-                <div className="text-xs font-bold text-slate-800">
-                  <span className="text-[#D4A843]">312</span> Catawba · <span className="text-slate-400">2,535</span> network
-                </div>
-              </div>
+            </div>
+            <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+              <span>9 counties in Goldie NC Network</span>
+              <span className="font-medium text-slate-600">Network total: <span className="text-[#D4A843] font-bold">2,847</span></span>
             </div>
           </CardContent>
         </Card>
