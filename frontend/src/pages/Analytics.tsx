@@ -41,7 +41,7 @@ const OUTCOME_TREND = [
 ];
 
 const INTERVENTION_EFFECTIVENESS = [
-  { category: 'ED-Based MAT (CVMC)', rate: 68, baseline: 12 },
+  { category: 'ED-Based MAT', rate: 68, baseline: 12 },
   { category: 'Peer Support + MAT',  rate: 54, baseline: 12 },
   { category: 'MAT Only',            rate: 41, baseline: 12 },
   { category: 'Peer Support Only',   rate: 29, baseline: 12 },
@@ -238,7 +238,7 @@ export default function Analytics() {
 
             <div className="mt-4 p-3 bg-green-50 rounded-lg">
               <p className="text-xs text-green-700 font-medium">
-                Key finding: ED-based MAT initiation at CVMC within 72h of OD is 5.7× more effective than no intervention at preventing 6-month repeat OD.
+                Key finding: ED-based MAT initiation within 72h of OD is 5.7× more effective than no intervention at preventing 6-month repeat OD.
               </p>
             </div>
 
